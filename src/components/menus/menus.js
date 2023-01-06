@@ -14,6 +14,7 @@ function Menus({
   setAddedToFavorite,
 }) {
   const [newFav, setNewFav] = useState(favList);
+  console.log("newFav: " + newFav);
 
   const [isFavShowed, setIsFavShowed] = useState(false);
   const [isSettingsShowed, setIsSettingsShowed] = useState(false);
