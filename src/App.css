@@ -1,0 +1,29 @@
+#mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1000px;
+  padding: 10px auto;
+  margin: 0 auto;
+}
+#anotherSearchBtn {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+@import "./css files/header.css";
+
+@import "./css files/menus.css";
+
+@import "./css files/weatherHeader.css";
+@import "./css files/catchPhrase.css";
+
+@import "./css files/weatherDataCurrent.css";
+@import "./css files/clock.css";
+
+@import "./css files/weatherDataForecast.css";

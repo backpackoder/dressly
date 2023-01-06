@@ -1,0 +1,70 @@
+#weatherHeader {
+  max-width: 300px;
+  padding: 5px;
+  border: solid 1px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+#weatherHeader > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#weatherHeaderCity {
+  display: flex;
+  flex-direction: column;
+}
+#cityInput {
+  width: 300px;
+  max-width: 100%;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  text-transform: capitalize;
+  border: none;
+  margin: 0 auto;
+}
+
+#weatherHeaderCountry {
+  display: flex;
+  flex-wrap: wrap;
+}
+#weatherHeaderCountry > div {
+  width: 50%;
+}
+#selectCountry {
+  color: #000;
+}
+#selectCountry > p {
+  color: #fff;
+}
+#buttons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 5px;
+}
+#buttons > button {
+  min-width: 50px;
+  height: 40px;
+  font-size: 1rem;
+  border: solid 1px;
+  border-radius: 5px;
+}
+#resetBtn {
+  background-color: rgb(255, 80, 80);
+}
+#submitBtn {
+  background-color: lightgreen;
+}
+
+#weatherHeaderSummary {
+  text-transform: capitalize;
+  margin: 10px auto;
+}
+#weatherHeaderSummary > span {
+  text-transform: none;
+  font-weight: 100;
+}

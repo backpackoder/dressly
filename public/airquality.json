@@ -1,0 +1,24 @@
+{
+  "city_name": "Guadalajara",
+  "country_code": "MX",
+  "data": [
+    {
+      "aqi": 15,
+      "co": 188.5891,
+      "mold_level": 0,
+      "no2": 0.0132204145,
+      "o3": 32.901764,
+      "pm10": 10.242897,
+      "pm25": 3.417638,
+      "pollen_level_grass": 0,
+      "pollen_level_tree": 0,
+      "pollen_level_weed": 0,
+      "predominant_pollen_type": "Molds",
+      "so2": 0.24214387
+    }
+  ],
+  "lat": "20.66682",
+  "lon": "-103.39182",
+  "state_code": "14",
+  "timezone": "America/Mexico_City"
+}

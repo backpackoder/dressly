@@ -1,0 +1,28 @@
+#catchPhraseContainer {
+  position: relative;
+  width: 100%;
+}
+#catchPhrase {
+  font-size: 1rem;
+}
+#catchPhraseData {
+  max-width: 80%;
+  font-size: 2rem;
+  margin: 0 auto;
+}
+#catchPhraseCoord {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 0.8rem;
+}
+#favoriteBtnContainer {
+  position: absolute;
+  font-size: 1.5rem;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+.inFavs {
+  color: yellow;
+}

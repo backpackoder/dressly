@@ -1,0 +1,100 @@
+/* WeatherDataCurrent */
+#weatherData {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  border: solid #fff 1px;
+  border-radius: 10px;
+  margin: 10px auto;
+}
+#weatherMiddleInfos {
+  display: flex;
+  margin-bottom: 10px;
+}
+#weatherPart1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.weatherInfosItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* WeatherFeelsLike */
+#weatherFeelsLike {
+  font-size: 2.5rem;
+}
+
+/* WeatherIcon */
+#icon {
+  width: 100px;
+}
+
+/* QueHace */
+#queHace {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+}
+#queHaceText {
+  font-size: 1.2rem;
+}
+#queHace > div {
+  width: 100%;
+}
+#queHace img {
+  width: 100%;
+  max-width: 100px;
+}
+
+/* WeatherInfos */
+#weatherMainInfosItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#weatherSecondaryInfosItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+#weatherSecondaryInfosItem > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 45%;
+}
+.weatherTitleInfosItemWrapper {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  height: 100%;
+}
+.weatherTitleInfosItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0;
+}
+#getWeatherAqi,
+#getWeatherAirQuality {
+  border-radius: 5px;
+}
+#getWeatherAqi > span,
+#getWeatherAirQuality > span {
+  font-weight: bold;
+}
+
+/* locationNotFoundContainer */
+#locationNotFoundContainer img {
+  max-width: 200px;
+  max-height: 200px;
+}

@@ -1,0 +1,16 @@
+#dayAndTime {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+#actualDay {
+  max-width: 60%;
+}
+#actualTime {
+  width: 40%;
+  font-size: 2rem;
+}
+#actualTime > span.invisible {
+  color: transparent;
+}
