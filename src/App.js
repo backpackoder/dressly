@@ -45,7 +45,7 @@ function App() {
   // GetWeatherApi links
   // API KEYS : d493df14c0516863693cb4400253aaff /// c785a88639c20358827c2b46c36be516
   const currentLink = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&lang=sp&units=metric&limit=3&appid=c785a88639c20358827c2b46c36be516`;
-  const forecastLink = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName},${country}&lang=sp&units=metric&limit=3&$cnt=${cntLenght}&appid=c785a88639c20358827c2b46c36be516`;
+  const forecastLink = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName},${country}&lang=sp&units=metric&limit=3&$cnt=${cntLenght}&appid=c785a88639c20358827c2b46c36be516`;
   // Ambee Data links
   const currentAirQualityLink = `https://api.weatherbit.io/v2.0/current/airquality?city=${cityName}&key=d2a73b171c4f4d3682997db8f0ed6737`;
   // API KEYS : d2a73b171c4f4d3682997db8f0ed6737
