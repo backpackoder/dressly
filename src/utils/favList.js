@@ -2,9 +2,11 @@ const favList = [];
 
 const favListFromLS = JSON.parse(localStorage.getItem("favList"));
 
-favListFromLS.map((data) => {
-  return favList.push({ city: data.city, country: data.country });
-});
+if (favListFromLS) {
+  favListFromLS.map((data) => {
+    return favList.push({ city: data.city, country: data.country });
+  });
+}
 
 export default favList;
 
