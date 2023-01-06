@@ -34,19 +34,6 @@ function WeatherHeader({
   );
   // const findCountryInFavs = favList.find((item) => item.country === getWeatherCurrent.sys.country);
 
-  function eso() {
-    if (cityName) {
-      // console.log("fetchFilter cityName: " + cityName);
-      if (findCity !== undefined) {
-        // console.log("City found: " + JSON.stringify(findCity, null, 2));
-        // console.log("------------------------------------------------");
-      } else {
-        // console.log("City not found");
-        // console.log("help: " + JSON.stringify(findCity, null, 2));
-      }
-    }
-  }
-
   function fetchFilter(index) {
     const filterIndex = findCity[index];
     setCityName(filterIndex.name);
@@ -63,7 +50,6 @@ function WeatherHeader({
           <input
             onChange={(e) => {
               handleCity(e);
-              eso();
             }}
             name="selectCity"
             placeholder="..............."

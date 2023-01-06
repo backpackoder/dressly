@@ -6,6 +6,7 @@ import Header from "./components/header";
 import Menus from "./components/menus/menus";
 import WeatherHeader from "./components/weatherHeader";
 import CatchPhrase from "./components/catchPhrase";
+import SearchAnotherCity from "./searchAnotherCity";
 import WeatherDataForecast from "./components/weather/weatherDataForecast";
 import WeatherDataCurrent from "./components/weather/weatherDataCurrent";
 
@@ -220,16 +221,11 @@ function App() {
             searchLocation={searchLocation}
           />
         ) : null}
+
         {!willSearch && getWeatherCurrent.name ? (
-          <div id="anotherSearchBtnWrapper">
-            <input
-              onClick={() => setWillSearch(true)}
-              type="button"
-              value="Buscar una otra ciudad"
-              id="anotherSearchBtn"
-            />
-          </div>
+          <SearchAnotherCity setWillSearch={setWillSearch} />
         ) : null}
+
         {!willSearch && !getWeatherCurrent.name ? (
           <WeatherHeader
             getWeatherCurrent={getWeatherCurrent}
