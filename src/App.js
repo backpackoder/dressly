@@ -95,9 +95,9 @@ function App() {
         })
         .then((currentData) => {
           setGetWeatherCurrent(currentData);
-          console.log("citynameInCapitalize: " + citynameInCapitalize);
-          console.log("getWeatherCurrent: " + getWeatherCurrent.name);
-          console.log("FETCH DONE");
+          // console.log("citynameInCapitalize: " + citynameInCapitalize);
+          // console.log("getWeatherCurrent: " + getWeatherCurrent.name);
+          // console.log("FETCH DONE");
           return fetch(forecastLink);
         })
         // forecastLink's fetch
@@ -117,24 +117,26 @@ function App() {
         })
         // Catch if errors
         .catch((err) => {
-          console.log("erreur: " + err);
+          console.log("erreur dans catch: " + err);
         });
     }
 
     const findCityInFavs = favList.find(
       (item) =>
-        item.city === citynameInCapitalize &&
+        item.city === getWeatherCurrent.name &&
         item.country === getWeatherCurrent.sys.country
     );
     if (findCityInFavs !== undefined) {
       setAddedToFavorite(true);
-      console.log("AddedToFavorite: true");
-      console.log("findCityInFavs: " + JSON.stringify(findCityInFavs, null, 2));
+      // console.log("AddedToFavorite: true");
+      // console.log("findCityInFavs: " + JSON.stringify(findCityInFavs, null, 2));
     } else {
       setAddedToFavorite(false);
-      console.log("AddedToFavorite: false");
-      console.log("findCityInFavs: " + JSON.stringify(findCityInFavs, null, 2));
+      // console.log("AddedToFavorite: false");
+      // console.log("findCityInFavs: " + JSON.stringify(findCityInFavs, null, 2));
     }
+
+    console.log("favList App: " + JSON.stringify(favList));
   }
 
   function resetData() {
