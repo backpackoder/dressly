@@ -18,6 +18,7 @@ function WeatherHeader({
   setCountry,
   resetData,
   setCityName,
+  whichFetch,
   searchLocation,
 }) {
   let inputBtnValue = <FontAwesomeIcon icon={faMagnifyingGlass} />;
@@ -29,13 +30,13 @@ function WeatherHeader({
       : (inputBtnValue = <FontAwesomeIcon icon={faMagnifyingGlass} />);
   }
 
-  const findCity = worldCities.filter(
-    (item) => item.name.indexOf(cityName) !== -1
+  const findLocation = worldCities.filter(
+    (item) =>
+      item.name.indexOf(cityName) !== -1 && item.country.indexOf(country) !== -1
   );
-  // const findCountryInFavs = favList.find((item) => item.country === getWeatherCurrent.sys.country);
 
   function fetchFilter(index) {
-    const filterIndex = findCity[index];
+    const filterIndex = findLocation[index];
     setCityName(filterIndex.name);
     setCountry(filterIndex.country);
 
@@ -55,19 +56,16 @@ function WeatherHeader({
             placeholder="..............."
             value={citynameInCapitalize}
             id="cityInput"
-          ></input>
-          <div>
-            {findCity.length < 10
-              ? findCity.map((data, index) => {
-                  return (
-                    <div key={index}>
-                      <p onClick={() => fetchFilter(index)}>
-                        {data.name}, {data.country}
-                      </p>
-                    </div>
-                  );
-                })
-              : null}
+          />
+
+          <div className="locationGuesser">
+            {findLocation.map((data, index) => {
+              return citynameInCapitalize && index < 10 ? (
+                <p key={index} onClick={() => fetchFilter(index)}>
+                  {data.name}, {data.country}
+                </p>
+              ) : null;
+            })}
           </div>
         </div>
 
@@ -80,7 +78,13 @@ function WeatherHeader({
             <button onClick={resetData} id="resetBtn">
               <FontAwesomeIcon icon={faTrashCan} />
             </button>
-            <button onClick={searchLocation} id="submitBtn">
+            <button
+              onClick={() => {
+                whichFetch();
+                searchLocation();
+              }}
+              id="submitBtn"
+            >
               {inputBtnValue}
             </button>
           </div>

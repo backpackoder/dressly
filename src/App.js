@@ -14,14 +14,29 @@ import favList from "./utils/favList";
 // import worldCities from "./utils/worldCities.json";
 
 function App() {
-  const cntLenght = 8;
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  }
+
+  const [changeCnt, setChangeCnt] = useState(1);
+  const cntLenght = changeCnt;
   const cnt = [];
 
-  for (let i = 0; i < cntLenght; i++) {
+  for (let i = 0; i < cntLenght * 8; i++) {
     cnt.push(i);
   }
 
+  function increaseCnt() {
+    if (changeCnt < 5) {
+      setChangeCnt(changeCnt + 1);
+      console.log("changeCnt: " + changeCnt);
+    }
+  }
+
   // HOOKS
+  const [longitud, setLongitud] = useState("");
+  const [latitud, setLatitud] = useState("");
+
   const [cityName, setCityName] = useState("");
 
   const splitCityName = cityName.split(" ");
@@ -45,23 +60,35 @@ function App() {
   // API
   // GetWeatherApi links
   // API KEYS : d493df14c0516863693cb4400253aaff /// c785a88639c20358827c2b46c36be516
-  const currentLink = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&lang=sp&units=metric&limit=3&appid=c785a88639c20358827c2b46c36be516`;
-  const forecastLink = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName},${country}&lang=sp&units=metric&limit=3&$cnt=${cntLenght}&appid=c785a88639c20358827c2b46c36be516`;
-  // Ambee Data links
-  const currentAirQualityLink = `https://api.weatherbit.io/v2.0/current/airquality?city=${cityName}&key=d2a73b171c4f4d3682997db8f0ed6737`;
+  const currentLink = `https://api.openweathermap.org/data/2.5/weather?q=${citynameInCapitalize.trim()},${country}&lang=sp&units=metric&limit=3&appid=c785a88639c20358827c2b46c36be516`;
+  const forecastLink = `https://api.openweathermap.org/data/2.5/forecast?q=${citynameInCapitalize.trim()},${country}&lang=sp&units=metric&limit=3&$cnt=${cntLenght}&appid=c785a88639c20358827c2b46c36be516`;
+  const currentFromLocLink = `https://api.openweathermap.org/data/2.5/weather?lat=${latitud}&lon=${longitud}&lang=sp&units=metric&appid=c785a88639c20358827c2b46c36be516`;
+  const forecastFromLocLink = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitud}&lon=${longitud}&lang=sp&units=metric&appid=c785a88639c20358827c2b46c36be516`;
+
+  // weatherbit.io links
+  const currentAirQualityLink = `https://api.weatherbit.io/v2.0/current/airquality?city=${citynameInCapitalize.trim()}&key=d2a73b171c4f4d3682997db8f0ed6737`;
+  const currentAirQualityFromLocLink = `https://api.weatherbit.io/v2.0/current/airquality?lat=${latitud}&lon=${longitud}&key=d2a73b171c4f4d3682997db8f0ed6737`;
   // API KEYS : d2a73b171c4f4d3682997db8f0ed6737
   // https://www.weatherapi.com links
   // API KEYS : 04196720d32144c9b0124634222512
   // const forecastDaily = "lien";
 
   // FUNCTIONS
+  function showPosition(position) {
+    setLongitud(position.coords.longitude);
+    setLatitud(position.coords.latitude);
+  }
+
   function handleCity(e) {
     setCityName(e.target.value);
   }
 
+  function whichFetch() {}
+
   function searchLocation() {
     setWillSearch(false);
     setHasSearched(true);
+    setChangeCnt(1);
 
     // METHODE NORMALE 1 FETCH
     // fetch(currentLink)
@@ -89,7 +116,7 @@ function App() {
 
     // METHODE YOUNESS
     // currentLink's fetch
-    if (citynameInCapitalize) {
+    if (citynameInCapitalize || navigator.geolocation) {
       fetch(currentLink)
         .then((res) => {
           return res.json();
@@ -194,9 +221,48 @@ function App() {
     }
   });
 
+  function ubi() {
+    setWillSearch(false);
+    setHasSearched(true);
+    setChangeCnt(1);
+
+    fetch(currentFromLocLink)
+      .then((res) => {
+        return res.json();
+      })
+      .then((currentData) => {
+        setGetWeatherCurrent(currentData);
+        // console.log("citynameInCapitalize: " + citynameInCapitalize);
+        // console.log("getWeatherCurrent: " + getWeatherCurrent.name);
+        // console.log("FETCH DONE");
+        return fetch(forecastFromLocLink);
+      })
+      // forecastLink's fetch
+      .then((res) => {
+        return res.json();
+      })
+      .then((forecastData) => {
+        setGetWeatherForecast(forecastData);
+        return fetch(currentAirQualityFromLocLink);
+      })
+      // currentAirQualityLink's fetch
+      .then((res) => {
+        return res.json();
+      })
+      .then((currentAirQualityData) => {
+        setGetCurrentAirQuality(currentAirQualityData);
+      })
+      // Catch if errors
+      .catch((err) => {
+        console.log("erreur dans catch: " + err);
+      });
+  }
+
   return (
     <div id="fakeRoot">
       <Header hasSearched={hasSearched} />
+
+      <button onClick={ubi}>Ubicacion</button>
 
       <Menus
         cityName={cityName}
@@ -218,6 +284,7 @@ function App() {
             setCountry={setCountry}
             resetData={resetData}
             setCityName={setCityName}
+            whichFetch={whichFetch}
             searchLocation={searchLocation}
           />
         ) : null}
@@ -236,6 +303,7 @@ function App() {
             setCountry={setCountry}
             resetData={resetData}
             setCityName={setCityName}
+            whichFetch={whichFetch}
             searchLocation={searchLocation}
           />
         ) : null}
@@ -257,13 +325,25 @@ function App() {
                   <WeatherDataForecast
                     getWeatherForecast={getWeatherForecast}
                     cnt={cnt}
+                    changeCnt={changeCnt}
+                    increaseCnt={increaseCnt}
                   />
                 ) : null}
               </>
             ) : (
               <div id="locationNotFoundContainer">
                 <img src="temp0.png" alt="Ninguna ciudad ha sido encontrada" />
-                <p>Ninguna ciudad ha sido encontrada.</p>
+                <p>
+                  Ninguna ciudad ha sido encontrada. <br />
+                  <br />
+                  Para arreglar el problema:
+                  <br />
+                  1. Verifica tu conexion internet.
+                  <br />
+                  2. Autorizanos compartir tu ubicacion.
+                  <br />
+                  3. Cambia la ciudad o el pais que has elegido.
+                </p>
               </div>
             )}
           </>

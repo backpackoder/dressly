@@ -34,7 +34,7 @@ function CatchPhrase({
 
   return (
     <div id="catchPhraseContainer">
-      <p id="catchPhrase">Cómo se siente en:</p>
+      <p id="catchPhrase">Cómo se siente en</p>
       <div id="catchPhraseData">
         <p>
           {getWeatherCurrent.name} ({getWeatherCurrent.sys.country})

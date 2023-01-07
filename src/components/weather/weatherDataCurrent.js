@@ -203,7 +203,9 @@ function WeatherInfos({ getWeatherCurrent, getCurrentAirQuality }) {
     <div id="weatherInfos">
       <div id="weatherMainInfosItem" className="weatherInfosItem">
         <div id="weatherRise">
-          <FontAwesomeIcon icon={faSun} />
+          <div className="help">
+            <FontAwesomeIcon icon={faSun} className="weatherInfosIcon" />
+          </div>
           {getWeatherCurrent.sys ? (
             <p id="getWeatherRise">
               {getHoursRise < 10 ? "0" + getHoursRise : getHoursRise}:
@@ -213,7 +215,9 @@ function WeatherInfos({ getWeatherCurrent, getCurrentAirQuality }) {
         </div>
 
         <div id="weatherSet">
-          <FontAwesomeIcon icon={faMoon} />
+          <div className="help">
+            <FontAwesomeIcon icon={faMoon} className="weatherInfosIcon" />
+          </div>
           {getWeatherCurrent.sys ? (
             <p id="getWeatherSet">
               {getHoursSet < 10 ? "0" + getHoursSet : getHoursSet}:
@@ -222,17 +226,21 @@ function WeatherInfos({ getWeatherCurrent, getCurrentAirQuality }) {
           ) : null}
         </div>
 
-        <div>
-          <FontAwesomeIcon icon={faDroplet} />
+        <div id="weatherHumidity">
+          <div className="help">
+            <FontAwesomeIcon icon={faDroplet} className="weatherInfosIcon" />
+          </div>
           {getWeatherCurrent.main ? (
             <p id="getWeatherHumidity">{getWeatherCurrent.main.humidity}%</p>
           ) : null}
         </div>
 
-        <div>
-          <FontAwesomeIcon icon={faWind} />
+        <div id="weatherWind">
+          <div className="help">
+            <FontAwesomeIcon icon={faWind} className="weatherInfosIcon" />
+          </div>
           {getWeatherCurrent.wind ? (
-            <p id="getWeatherAirQuality">{getWeatherCurrent.wind.speed}km/h</p>
+            <p id="getWeatherWind">{getWeatherCurrent.wind.speed}km/h</p>
           ) : null}
         </div>
       </div>

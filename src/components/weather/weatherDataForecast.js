@@ -46,10 +46,15 @@ function WeatherDataItem({ getWeatherForecast, cntIndex }) {
   );
 }
 
-function WeatherDataForecast({ getWeatherForecast, cnt }) {
+function WeatherDataForecast({
+  getWeatherForecast,
+  cnt,
+  changeCnt,
+  increaseCnt,
+}) {
   return (
     <div id="weatherDataForecast">
-      <div id="weatherDataItemForecastContainer">
+      <div>
         <h2>Previsiones 24h</h2>
         <p>(cada 3 horas)</p>
         <div id="weatherDataItemForecastWrapper">
@@ -63,6 +68,12 @@ function WeatherDataForecast({ getWeatherForecast, cnt }) {
             );
           })}
         </div>
+
+        {changeCnt < 5 ? (
+          <button onClick={increaseCnt} className="increaseCntBtn">
+            Ver 24h más
+          </button>
+        ) : null}
       </div>
     </div>
   );

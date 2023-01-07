@@ -45,7 +45,12 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  background: linear-gradient(to left, rgb(120, 120, 120) 50%, rgb(80, 80, 80) 50%) right;
+  background: linear-gradient(
+      to left,
+      rgb(120, 120, 120) 50%,
+      rgb(80, 80, 80) 50%
+    )
+    right;
   background-size: 200%;
   border-radius: 10px;
   padding: 0 5px;
@@ -87,32 +92,80 @@
 }
 
 #heatIndex {
-  font-size: 0.8rem;
+  position: relative;
+  font-size: 1rem;
   padding: 5px;
   border: solid 1px red;
   border-radius: 5px;
 }
-#heatIndex > div {
+.levels {
   display: flex;
   flex-direction: column;
   width: 100%;
+  font-size: 1rem;
+  font-weight: normal;
   padding: 5px;
-  border: solid 1px black;
   border-radius: 2px;
   margin-bottom: 2px;
 }
-.mapInput {
-  max-width: 1.5rem;
-  text-align: center;
+.levels > div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+}
+.thermometer {
+  position: absolute;
+  left: 0px;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(
+    0deg,
+    rgb(0, 26, 255) 20%,
+    rgb(0, 208, 255) 40%,
+    rgb(255, 166, 0) 50%,
+    rgb(255, 166, 0) 60%,
+    rgb(255, 0, 0) 80%
+  );
+  border: solid #000 1px;
+  border-radius: 8px;
+}
+.level {
+  background-color: rgb(116, 116, 116);
+  font-size: 0.8rem;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 5px 0;
+}
+.level .label {
+  font-size: 1rem;
   font-weight: bold;
 }
-#resetChanges,
-#saveChanges {
-  height: 25px;
-  background-color: green;
-  color: #fff;
+.level input {
+  width: 3rem;
   font-weight: bold;
   text-align: center;
+  vertical-align: bottom;
+  border-radius: 50px;
+}
+.level span {
+  font-weight: bold;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+.resetAndSaveBtn {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.resetAndSaveBtn input {
+  background-color: green;
+  color: #fff;
+  font-weight: 600;
   padding: 5px;
-  border: solid 1px #000;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 1);
 }
