@@ -5,6 +5,8 @@ import {
   faArrowRightRotate,
 } from "@fortawesome/free-solid-svg-icons";
 
+import SearchByLocation from "../searchByLocation";
+
 import CountrySelector from "./countrySelector";
 
 import worldCities from "../utils/worldCities.json";
@@ -18,8 +20,8 @@ function WeatherHeader({
   setCountry,
   resetData,
   setCityName,
-  whichFetch,
-  searchLocation,
+  searchByName,
+  searchByLocation,
 }) {
   let inputBtnValue = <FontAwesomeIcon icon={faMagnifyingGlass} />;
 
@@ -40,13 +42,14 @@ function WeatherHeader({
     setCityName(filterIndex.name);
     setCountry(filterIndex.country);
 
-    searchLocation();
+    searchByName();
   }
 
   return (
     <>
       <div id="weatherHeader">
         <div id="weatherHeaderCity">
+          <SearchByLocation searchByLocation={searchByLocation} />
           <p>Insierta una ciudad:</p>
           <input
             onChange={(e) => {
@@ -78,13 +81,7 @@ function WeatherHeader({
             <button onClick={resetData} id="resetBtn">
               <FontAwesomeIcon icon={faTrashCan} />
             </button>
-            <button
-              onClick={() => {
-                whichFetch();
-                searchLocation();
-              }}
-              id="submitBtn"
-            >
+            <button onClick={searchByName} id="submitBtn">
               {inputBtnValue}
             </button>
           </div>

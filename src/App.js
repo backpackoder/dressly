@@ -34,8 +34,8 @@ function App() {
   }
 
   // HOOKS
-  const [longitud, setLongitud] = useState("");
-  const [latitud, setLatitud] = useState("");
+  const [longitud, setLongitud] = useState();
+  const [latitud, setLatitud] = useState();
 
   const [cityName, setCityName] = useState("");
 
@@ -83,7 +83,17 @@ function App() {
     setCityName(e.target.value);
   }
 
-  function whichFetch() {}
+  const [isSearchByLocation, setIsSearchByLocation] = useState(true);
+
+  function searchByLocation() {
+    setIsSearchByLocation(true);
+    searchLocation();
+  }
+
+  function searchByName() {
+    setIsSearchByLocation(false);
+    searchLocation();
+  }
 
   function searchLocation() {
     setWillSearch(false);
@@ -117,7 +127,7 @@ function App() {
     // METHODE YOUNESS
     // currentLink's fetch
     if (citynameInCapitalize || navigator.geolocation) {
-      fetch(currentLink)
+      fetch(isSearchByLocation ? currentFromLocLink : currentLink)
         .then((res) => {
           return res.json();
         })
@@ -126,7 +136,7 @@ function App() {
           // console.log("citynameInCapitalize: " + citynameInCapitalize);
           // console.log("getWeatherCurrent: " + getWeatherCurrent.name);
           // console.log("FETCH DONE");
-          return fetch(forecastLink);
+          return fetch(isSearchByLocation ? forecastFromLocLink : forecastLink);
         })
         // forecastLink's fetch
         .then((res) => {
@@ -134,7 +144,11 @@ function App() {
         })
         .then((forecastData) => {
           setGetWeatherForecast(forecastData);
-          return fetch(currentAirQualityLink);
+          return fetch(
+            isSearchByLocation
+              ? currentAirQualityFromLocLink
+              : currentAirQualityLink
+          );
         })
         // currentAirQualityLink's fetch
         .then((res) => {
@@ -169,6 +183,7 @@ function App() {
 
   function resetData() {
     setHasSearched(false);
+    setIsSearchByLocation(true);
     setCityName("");
     setCountry("");
     setGetWeatherCurrent({});
@@ -221,48 +236,9 @@ function App() {
     }
   });
 
-  function ubi() {
-    setWillSearch(false);
-    setHasSearched(true);
-    setChangeCnt(1);
-
-    fetch(currentFromLocLink)
-      .then((res) => {
-        return res.json();
-      })
-      .then((currentData) => {
-        setGetWeatherCurrent(currentData);
-        // console.log("citynameInCapitalize: " + citynameInCapitalize);
-        // console.log("getWeatherCurrent: " + getWeatherCurrent.name);
-        // console.log("FETCH DONE");
-        return fetch(forecastFromLocLink);
-      })
-      // forecastLink's fetch
-      .then((res) => {
-        return res.json();
-      })
-      .then((forecastData) => {
-        setGetWeatherForecast(forecastData);
-        return fetch(currentAirQualityFromLocLink);
-      })
-      // currentAirQualityLink's fetch
-      .then((res) => {
-        return res.json();
-      })
-      .then((currentAirQualityData) => {
-        setGetCurrentAirQuality(currentAirQualityData);
-      })
-      // Catch if errors
-      .catch((err) => {
-        console.log("erreur dans catch: " + err);
-      });
-  }
-
   return (
     <div id="fakeRoot">
       <Header hasSearched={hasSearched} />
-
-      <button onClick={ubi}>Ubicacion</button>
 
       <Menus
         cityName={cityName}
@@ -284,8 +260,8 @@ function App() {
             setCountry={setCountry}
             resetData={resetData}
             setCityName={setCityName}
-            whichFetch={whichFetch}
-            searchLocation={searchLocation}
+            searchByLocation={searchByLocation}
+            searchByName={searchByName}
           />
         ) : null}
 
@@ -303,8 +279,8 @@ function App() {
             setCountry={setCountry}
             resetData={resetData}
             setCityName={setCityName}
-            whichFetch={whichFetch}
-            searchLocation={searchLocation}
+            searchByLocation={searchByLocation}
+            searchByName={searchByName}
           />
         ) : null}
 

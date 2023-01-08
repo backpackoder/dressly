@@ -1,0 +1,21 @@
+.searchByLocationBtnWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* max-width: 75%; */
+  background-color: rgba(0, 128, 0, 0.75);
+  padding: 0 10px;
+  border-radius: 5px;
+  margin: 0 auto 10px;
+}
+.searchByLocationBtn {
+  width: 100%;
+  max-width: 400px;
+  background-color: transparent;
+  color: #fff;
+  font-weight: bold;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

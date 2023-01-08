@@ -2,6 +2,7 @@
 #weatherData {
   display: flex;
   flex-direction: column;
+  max-width: 400px;
   padding: 5px;
   border: solid #fff 1px;
   border-radius: 10px;
