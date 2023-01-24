@@ -137,6 +137,7 @@ function App() {
     searchByLocation,
     searchByName,
     setWillSearch,
+    hasSearched,
     // Favorites
     addedToFavorite,
     setAddedToFavorite,
