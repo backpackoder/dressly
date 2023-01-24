@@ -256,7 +256,7 @@ function App() {
 
   return (
     <MainContext.Provider value={contextValue}>
-      <Header hasSearched={hasSearched} />
+      <Header />
 
       <Menus />
 

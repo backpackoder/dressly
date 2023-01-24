@@ -1,4 +1,9 @@
-function Header({ hasSearched }) {
+import { useContext } from "react";
+import MainContext from "../MainContext";
+
+function Header() {
+  const { hasSearched } = useContext(MainContext);
+
   return (
     <>
       {!hasSearched ? (
