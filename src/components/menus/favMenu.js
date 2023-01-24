@@ -5,11 +5,10 @@ import favList from "../../utils/favList";
 
 function FavMenu({
   setNewFav,
-  cityName,
   citynameInCapitalize,
   setCityName,
   setCountry,
-  searchLocation,
+  searchByName,
   setAddedToFavorite,
   isFavShowed,
   setIsFavShowed,
@@ -50,7 +49,7 @@ function FavMenu({
 
     setIsFavShowed(!isFavShowed);
 
-    searchLocation();
+    searchByName();
   }
 
   return (

@@ -8,7 +8,7 @@ const queHaceData = {
     imgSrc: "temp1.png",
   },
   temp2: {
-    catchPhrase: "Hace un poco frijol.",
+    catchPhrase: "Hace un poco frijol",
     imgSrc: "temp2.png",
   },
   temp3: {
@@ -16,11 +16,11 @@ const queHaceData = {
     imgSrc: "temp3.png",
   },
   temp4: {
-    catchPhrase: "Hace un poco calabacín.",
+    catchPhrase: "Hace un poco calabacín",
     imgSrc: "temp4.png",
   },
   temp5: {
-    catchPhrase: "¡Wow! Hace calabacín aquí.",
+    catchPhrase: "¡Wow! Hace calabacín aquí",
     imgSrc: "temp5.png",
   },
   temp6: {

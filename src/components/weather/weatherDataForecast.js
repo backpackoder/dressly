@@ -1,3 +1,38 @@
+import { useContext } from "react";
+
+import MainContext from "../../MainContext";
+
+function WeatherDataForecast() {
+  const { getWeatherForecast, cnt, cntValue, increaseCnt } =
+    useContext(MainContext);
+
+  return getWeatherForecast.list ? (
+    <div id="weatherDataForecast">
+      <div>
+        <h2>Previsiones 24h</h2>
+        <p>(cada 3 horas)</p>
+        <div id="weatherDataItemForecastWrapper">
+          {cnt.map((data, index) => {
+            return (
+              <WeatherDataItem
+                key={index}
+                getWeatherForecast={getWeatherForecast}
+                cntIndex={data}
+              />
+            );
+          })}
+        </div>
+
+        {cntValue < 5 ? (
+          <button onClick={increaseCnt} className="increaseCntBtn">
+            Ver 24h más
+          </button>
+        ) : null}
+      </div>
+    </div>
+  ) : null;
+}
+
 function WeatherDataItem({ getWeatherForecast, cntIndex }) {
   const deltatime = getWeatherForecast.list[cntIndex].dt;
   const timezone = getWeatherForecast.city.timezone;
@@ -41,39 +76,6 @@ function WeatherDataItem({ getWeatherForecast, cntIndex }) {
           value=">>> Ver detalles >>>"
           className="forecastDetailsBtn"
         />
-      </div>
-    </div>
-  );
-}
-
-function WeatherDataForecast({
-  getWeatherForecast,
-  cnt,
-  changeCnt,
-  increaseCnt,
-}) {
-  return (
-    <div id="weatherDataForecast">
-      <div>
-        <h2>Previsiones 24h</h2>
-        <p>(cada 3 horas)</p>
-        <div id="weatherDataItemForecastWrapper">
-          {cnt.map((data, index) => {
-            return (
-              <WeatherDataItem
-                key={index}
-                getWeatherForecast={getWeatherForecast}
-                cntIndex={data}
-              />
-            );
-          })}
-        </div>
-
-        {changeCnt < 5 ? (
-          <button onClick={increaseCnt} className="increaseCntBtn">
-            Ver 24h más
-          </button>
-        ) : null}
       </div>
     </div>
   );

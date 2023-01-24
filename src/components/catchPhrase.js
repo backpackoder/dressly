@@ -2,12 +2,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 import favList from "../utils/favList";
+import { useContext } from "react";
+import MainContext from "../MainContext";
 
-function CatchPhrase({
-  getWeatherCurrent,
-  addedToFavorite,
-  setAddedToFavorite,
-}) {
+function CatchPhrase() {
+  const { getWeatherCurrent, addedToFavorite, setAddedToFavorite } =
+    useContext(MainContext);
+
   function updateLocalStorage() {
     const favListString = JSON.stringify(favList);
     window.localStorage.setItem("favList", favListString);

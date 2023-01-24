@@ -5,32 +5,35 @@ import {
   faArrowRightRotate,
 } from "@fortawesome/free-solid-svg-icons";
 
-import SearchByLocation from "../searchByLocation";
+import SearchByLocation from "./buttons/SearchByLocation";
 
-import CountrySelector from "./countrySelector";
+import CountrySelector from "./CountrySelector";
 
 import worldCities from "../utils/worldCities.json";
+import { useContext, useEffect, useState } from "react";
+import MainContext from "../MainContext";
 
-function WeatherHeader({
-  getWeatherCurrent,
-  handleCity,
-  cityName,
-  citynameInCapitalize,
-  country,
-  setCountry,
-  resetData,
-  setCityName,
-  searchByName,
-  searchByLocation,
-}) {
-  let inputBtnValue = <FontAwesomeIcon icon={faMagnifyingGlass} />;
+function WeatherHeader() {
+  const {
+    getWeatherCurrent,
+    cityName,
+    citynameInCapitalize,
+    country,
+    setCountry,
+    resetData,
+    setCityName,
+    searchByName,
+    searchByLocation,
+  } = useContext(MainContext);
 
-  if (getWeatherCurrent) {
+  const [inputBtnValue, setInputBtnValue] = useState(faMagnifyingGlass);
+
+  useEffect(() => {
     citynameInCapitalize === getWeatherCurrent.name &&
     (country === getWeatherCurrent.sys.country || country === "")
-      ? (inputBtnValue = <FontAwesomeIcon icon={faArrowRightRotate} />)
-      : (inputBtnValue = <FontAwesomeIcon icon={faMagnifyingGlass} />);
-  }
+      ? setInputBtnValue(faArrowRightRotate)
+      : setInputBtnValue(faMagnifyingGlass);
+  }, [getWeatherCurrent, cityName, citynameInCapitalize, country]);
 
   const findLocation = worldCities.filter(
     (item) =>
@@ -53,11 +56,11 @@ function WeatherHeader({
           <p>Insierta una ciudad:</p>
           <input
             onChange={(e) => {
-              handleCity(e);
+              setCityName(e.target.value);
             }}
             name="selectCity"
             placeholder="..............."
-            value={citynameInCapitalize}
+            value={cityName}
             id="cityInput"
           />
 
@@ -82,7 +85,7 @@ function WeatherHeader({
               <FontAwesomeIcon icon={faTrashCan} />
             </button>
             <button onClick={searchByName} id="submitBtn">
-              {inputBtnValue}
+              <FontAwesomeIcon icon={inputBtnValue} />
             </button>
           </div>
         </div>

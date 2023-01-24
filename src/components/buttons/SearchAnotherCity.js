@@ -1,4 +1,9 @@
-function SearchAnotherCity({ setWillSearch }) {
+import { useContext } from "react";
+import MainContext from "../../MainContext";
+
+function SearchAnotherCity() {
+  const { setWillSearch } = useContext(MainContext);
+
   return (
     <div className="anotherSearchBtnWrapper">
       <input

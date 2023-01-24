@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
-import FavMenu from "./favMenu";
-import SettingsMenu from "./settingsMenu";
+import FavMenu from "./FavMenu";
+import SettingsMenu from "./SettingsMenu";
 
 import favList from "../../utils/favList";
+import MainContext from "../../MainContext";
 
-function Menus({
-  cityName,
-  citynameInCapitalize,
-  setCityName,
-  setCountry,
-  searchLocation,
-  setAddedToFavorite,
-}) {
+function Menus() {
+  const {
+    setCityName,
+    citynameInCapitalize,
+    setCountry,
+    searchByName,
+    setAddedToFavorite,
+  } = useContext(MainContext);
+
   const [newFav, setNewFav] = useState(favList);
   console.log("newFav: " + newFav);
 
@@ -42,11 +44,10 @@ function Menus({
       {favList.length > 0 ? (
         <FavMenu
           setNewFav={setNewFav}
-          cityName={cityName}
           citynameInCapitalize={citynameInCapitalize}
           setCityName={setCityName}
           setCountry={setCountry}
-          searchLocation={searchLocation}
+          searchByName={searchByName}
           setAddedToFavorite={setAddedToFavorite}
           isFavShowed={isFavShowed}
           setIsFavShowed={setIsFavShowed}

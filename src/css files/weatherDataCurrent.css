@@ -2,6 +2,7 @@
 #weatherData {
   display: flex;
   flex-direction: column;
+  position: relative;
   max-width: 400px;
   padding: 5px;
   border: solid #fff 1px;
@@ -52,6 +53,10 @@
 #queHace img {
   width: 100%;
   max-width: 100px;
+}
+#queHace .queHaceInfo {
+  font-size: 0.6rem;
+  font-weight: normal;
 }
 
 /* WeatherInfos */
@@ -134,7 +139,7 @@
 }
 
 /* locationNotFoundContainer */
-#locationNotFoundContainer img {
+#locationNotFound img {
   max-width: 200px;
   max-height: 200px;
 }

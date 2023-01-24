@@ -1,0 +1,43 @@
+.generalInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  max-width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 10px;
+  z-index: 1;
+}
+.generalInfo.invisible {
+  display: none;
+}
+.generalInfo .xMark {
+  position: inherit;
+  top: 10%;
+  right: 10%;
+  color: red;
+  font-size: 3rem;
+}
+.generalInfo > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.generalInfo p {
+  font-size: 0.9rem;
+}
+.generalInfo span {
+  color: yellow;
+  /* font-size: 1.1rem; */
+}
+.generalInfoImg {
+  max-width: 150px;
+  max-height: 150px;
+}

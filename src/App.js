@@ -2,24 +2,39 @@ import "./App.css";
 
 import { useEffect, useState } from "react";
 
-import Header from "./components/header";
-import Menus from "./components/menus/menus";
-import WeatherHeader from "./components/weatherHeader";
-import CatchPhrase from "./components/catchPhrase";
-import SearchAnotherCity from "./searchAnotherCity";
-import WeatherDataForecast from "./components/weather/weatherDataForecast";
-import WeatherDataCurrent from "./components/weather/weatherDataCurrent";
+// Context
+import MainContext from "./MainContext";
 
+// Components
+import Header from "./components/Header";
+import Menus from "./components/menus/Menus";
+
+import WeatherHeader from "./components/WeatherHeader";
+import CatchPhrase from "./components/CatchPhrase";
+import SearchAnotherCity from "./components/buttons/SearchAnotherCity";
+
+import WeatherDataCurrent from "./components/weather/WeatherDataCurrent";
+import WeatherDataForecast from "./components/weather/WeatherDataForecast";
+import LocationNotFound from "./components/weather/LocationNotFound";
+
+// Hooks
+import useCitynameInCapitalize from "./hooks/hooks";
+
+// Utils
 import favList from "./utils/favList";
-// import worldCities from "./utils/worldCities.json";
 
 function App() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   }
 
-  const [changeCnt, setChangeCnt] = useState(1);
-  const cntLenght = changeCnt;
+  function showPosition(position) {
+    setLongitud(position.coords.longitude);
+    setLatitud(position.coords.latitude);
+  }
+
+  const [cntValue, setCntValue] = useState(1);
+  const cntLenght = cntValue;
   const cnt = [];
 
   for (let i = 0; i < cntLenght * 8; i++) {
@@ -27,24 +42,24 @@ function App() {
   }
 
   function increaseCnt() {
-    if (changeCnt < 5) {
-      setChangeCnt(changeCnt + 1);
-      console.log("changeCnt: " + changeCnt);
+    if (cntValue < 5) {
+      setCntValue(cntValue + 1);
     }
   }
 
-  // HOOKS
   const [longitud, setLongitud] = useState();
   const [latitud, setLatitud] = useState();
 
   const [cityName, setCityName] = useState("");
 
-  const splitCityName = cityName.split(" ");
-  for (var i = 0; i < splitCityName.length; i++) {
-    splitCityName[i] =
-      splitCityName[i].charAt(0).toUpperCase() + splitCityName[i].slice(1);
-  }
-  const citynameInCapitalize = splitCityName.join(" ");
+  const citynameInCapitalize = useCitynameInCapitalize(cityName);
+
+  // const splitCityName = cityName.split(" ");
+  // for (var i = 0; i < splitCityName.length; i++) {
+  //   splitCityName[i] =
+  //     splitCityName[i].charAt(0).toUpperCase() + splitCityName[i].slice(1);
+  // }
+  // const citynameInCapitalize = splitCityName.join(" ");
 
   const [country, setCountry] = useState("");
 
@@ -60,82 +75,94 @@ function App() {
   // API
   // GetWeatherApi links
   // API KEYS : d493df14c0516863693cb4400253aaff /// c785a88639c20358827c2b46c36be516
-  const currentLink = `https://api.openweathermap.org/data/2.5/weather?q=${citynameInCapitalize.trim()},${country}&lang=sp&units=metric&limit=3&appid=c785a88639c20358827c2b46c36be516`;
-  const forecastLink = `https://api.openweathermap.org/data/2.5/forecast?q=${citynameInCapitalize.trim()},${country}&lang=sp&units=metric&limit=3&$cnt=${cntLenght}&appid=c785a88639c20358827c2b46c36be516`;
-  const currentFromLocLink = `https://api.openweathermap.org/data/2.5/weather?lat=${latitud}&lon=${longitud}&lang=sp&units=metric&appid=c785a88639c20358827c2b46c36be516`;
-  const forecastFromLocLink = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitud}&lon=${longitud}&lang=sp&units=metric&appid=c785a88639c20358827c2b46c36be516`;
+  const currentLink = `https://api.openweathermap.org/data/2.5/weather?q=${citynameInCapitalize},${country}&lang=sp&units=metric&limit=3&appid=d493df14c0516863693cb4400253aaff`;
+  const forecastLink = `https://api.openweathermap.org/data/2.5/forecast?q=${citynameInCapitalize},${country}&lang=sp&units=metric&limit=3&$cnt=${cntLenght}&appid=d493df14c0516863693cb4400253aaff`;
+  const currentFromLocLink = `https://api.openweathermap.org/data/2.5/weather?lat=${latitud}&lon=${longitud}&lang=sp&units=metric&appid=d493df14c0516863693cb4400253aaff`;
+  const forecastFromLocLink = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitud}&lon=${longitud}&lang=sp&units=metric&appid=d493df14c0516863693cb4400253aaff`;
 
   // weatherbit.io links
-  const currentAirQualityLink = `https://api.weatherbit.io/v2.0/current/airquality?city=${citynameInCapitalize.trim()}&key=d2a73b171c4f4d3682997db8f0ed6737`;
-  const currentAirQualityFromLocLink = `https://api.weatherbit.io/v2.0/current/airquality?lat=${latitud}&lon=${longitud}&key=d2a73b171c4f4d3682997db8f0ed6737`;
-  // API KEYS : d2a73b171c4f4d3682997db8f0ed6737
+  const currentAirQualityLink = `https://api.weatherbit.io/v2.0/current/airquality?city=${citynameInCapitalize}&key=da8804d2bf7242fba42808df119747e5`;
+  const currentAirQualityFromLocLink = `https://api.weatherbit.io/v2.0/current/airquality?lat=${latitud}&lon=${longitud}&key=da8804d2bf7242fba42808df119747e5`;
+  // API KEYS : d2a73b171c4f4d3682997db8f0ed6737 /// da8804d2bf7242fba42808df119747e5
   // https://www.weatherapi.com links
   // API KEYS : 04196720d32144c9b0124634222512
   // const forecastDaily = "lien";
 
-  // FUNCTIONS
-  function showPosition(position) {
-    setLongitud(position.coords.longitude);
-    setLatitud(position.coords.latitude);
-  }
-
-  function handleCity(e) {
-    setCityName(e.target.value);
-  }
-
   const [isSearchByLocation, setIsSearchByLocation] = useState(true);
+  const [callApi, setCallApi] = useState(false);
 
   function searchByLocation() {
     setIsSearchByLocation(true);
-    searchLocation();
+    setCallApi(true);
+    setWillSearch(false);
+    setHasSearched(true);
+    setCntValue(1);
   }
 
   function searchByName() {
     setIsSearchByLocation(false);
-    searchLocation();
-  }
-
-  function searchLocation() {
+    setCallApi(true);
     setWillSearch(false);
     setHasSearched(true);
-    setChangeCnt(1);
+    setCntValue(1);
+  }
 
-    // METHODE NORMALE 1 FETCH
-    // fetch(currentLink)
-    // .then((res) => res.json())
-    // .then((res2) => {
-    //   setGetWeatherCurrent(res2);
-    //   console.log("res2 " + getWeatherCurrent.name);
-    // })
-    // .catch((err) => console.log("err: " + err));
+  function resetData() {
+    setHasSearched(false);
+    setIsSearchByLocation(true);
+    setCityName("");
+    setCountry("");
+    setGetWeatherCurrent({});
+    setGetWeatherForecast({});
+    setGetCurrentAirQuality({});
+  }
 
-    // METHODE DIMITRI
-    // const currentLinkFetch = fetch(currentLink).then((res) => res.json());
-    // const forecastLinkFetch = fetch(forecastLink).then((res) => res.json());
-    // const currentAirQualityLinkFetch = fetch(currentAirQuality).then((res) => res.json());
+  // Into WeatherDataCurrent's component
+  const [generalInfo, setGeneralInfo] = useState(false);
 
-    // const allData = Promise.all([currentLinkFetch, forecastLinkFetch, currentAirQualityLinkFetch]);
-    // const resFetchs = [setGetWeatherCurrent, setGetWeatherForecast, setGetCurrentAirQuality];
+  const contextValue = {
+    // API datas
+    getWeatherCurrent,
+    getWeatherForecast,
+    getCurrentAirQuality,
+    // City and country names
+    cityName,
+    setCityName,
+    citynameInCapitalize,
+    country,
+    setCountry,
+    // ResetData function
+    resetData,
+    // Search functions
+    searchByLocation,
+    searchByName,
+    setWillSearch,
+    // Favorites
+    addedToFavorite,
+    setAddedToFavorite,
+    // Ctn for forecast
+    cnt,
+    cntValue,
+    increaseCnt,
+    // General info
+    generalInfo,
+    setGeneralInfo,
+  };
 
-    // allData.then((res) => {
-    //   resFetchs.map((data, index) => {
-    //     return data(res[index]);
-    //   });
-    //   console.log("after Fetch: " + getWeatherCurrent.name);
-    // });
+  useEffect(() => {
+    setWillSearch(false);
+    setHasSearched(true);
+    setCntValue(1);
 
-    // METHODE YOUNESS
-    // currentLink's fetch
-    if (citynameInCapitalize || navigator.geolocation) {
+    if (longitud && latitud) {
+      // METHODE YOUNESS
+      // currentLink's fetch
       fetch(isSearchByLocation ? currentFromLocLink : currentLink)
         .then((res) => {
           return res.json();
         })
         .then((currentData) => {
           setGetWeatherCurrent(currentData);
-          // console.log("citynameInCapitalize: " + citynameInCapitalize);
-          // console.log("getWeatherCurrent: " + getWeatherCurrent.name);
-          // console.log("FETCH DONE");
           return fetch(isSearchByLocation ? forecastFromLocLink : forecastLink);
         })
         // forecastLink's fetch
@@ -163,6 +190,13 @@ function App() {
         });
     }
 
+    return () => {
+      setCallApi(false);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [callApi, latitud, longitud]);
+
+  useEffect(() => {
     const findCityInFavs = favList.find(
       (item) =>
         item.city === getWeatherCurrent.name &&
@@ -170,29 +204,15 @@ function App() {
     );
     if (findCityInFavs !== undefined) {
       setAddedToFavorite(true);
-      // console.log("AddedToFavorite: true");
-      // console.log("findCityInFavs: " + JSON.stringify(findCityInFavs, null, 2));
     } else {
       setAddedToFavorite(false);
-      // console.log("AddedToFavorite: false");
-      // console.log("findCityInFavs: " + JSON.stringify(findCityInFavs, null, 2));
     }
-
-    console.log("favList App: " + JSON.stringify(favList));
-  }
-
-  function resetData() {
-    setHasSearched(false);
-    setIsSearchByLocation(true);
-    setCityName("");
-    setCountry("");
-    setGetWeatherCurrent({});
-    setGetWeatherForecast({});
-    setGetCurrentAirQuality({});
-  }
+  }, [getWeatherCurrent]);
 
   useEffect(() => {
     if (getWeatherCurrent.name) {
+      const root = document.getElementById("root");
+
       const deltatime = getWeatherCurrent.dt;
       const timezone = getWeatherCurrent.timezone;
       const date = new Date((deltatime + timezone) * 1000);
@@ -209,8 +229,6 @@ function App() {
       const getMinutesSet = new Date(
         (sunset + timezone) * 1000
       ).getUTCMinutes();
-
-      const root = document.getElementById("root");
 
       if (dateHours < getHoursRise) {
         root.classList.add("nightTime");
@@ -237,95 +255,25 @@ function App() {
   });
 
   return (
-    <div id="fakeRoot">
+    <MainContext.Provider value={contextValue}>
       <Header hasSearched={hasSearched} />
 
-      <Menus
-        cityName={cityName}
-        setCityName={setCityName}
-        setCountry={setCountry}
-        searchLocation={searchLocation}
-        citynameInCapitalize={citynameInCapitalize}
-        setAddedToFavorite={setAddedToFavorite}
-      />
+      <Menus />
 
       <div id="mainContainer">
-        {willSearch ? (
-          <WeatherHeader
-            getWeatherCurrent={getWeatherCurrent}
-            handleCity={handleCity}
-            cityName={cityName}
-            citynameInCapitalize={citynameInCapitalize}
-            country={country}
-            setCountry={setCountry}
-            resetData={resetData}
-            setCityName={setCityName}
-            searchByLocation={searchByLocation}
-            searchByName={searchByName}
-          />
-        ) : null}
+        {willSearch ? <WeatherHeader /> : <SearchAnotherCity />}
 
-        {!willSearch && getWeatherCurrent.name ? (
-          <SearchAnotherCity setWillSearch={setWillSearch} />
-        ) : null}
-
-        {!willSearch && !getWeatherCurrent.name ? (
-          <WeatherHeader
-            getWeatherCurrent={getWeatherCurrent}
-            handleCity={handleCity}
-            cityName={cityName}
-            citynameInCapitalize={citynameInCapitalize}
-            country={country}
-            setCountry={setCountry}
-            resetData={resetData}
-            setCityName={setCityName}
-            searchByLocation={searchByLocation}
-            searchByName={searchByName}
-          />
-        ) : null}
-
-        {hasSearched ? (
+        {hasSearched && getWeatherCurrent.name ? (
           <>
-            {getWeatherCurrent.name ? (
-              <>
-                <CatchPhrase
-                  getWeatherCurrent={getWeatherCurrent}
-                  addedToFavorite={addedToFavorite}
-                  setAddedToFavorite={setAddedToFavorite}
-                />
-                <WeatherDataCurrent
-                  getWeatherCurrent={getWeatherCurrent}
-                  getCurrentAirQuality={getCurrentAirQuality}
-                />
-                {getWeatherForecast.list ? (
-                  <WeatherDataForecast
-                    getWeatherForecast={getWeatherForecast}
-                    cnt={cnt}
-                    changeCnt={changeCnt}
-                    increaseCnt={increaseCnt}
-                  />
-                ) : null}
-              </>
-            ) : (
-              <div id="locationNotFoundContainer">
-                <img src="temp0.png" alt="Ninguna ciudad ha sido encontrada" />
-                <p>
-                  Ninguna ciudad ha sido encontrada. <br />
-                  <br />
-                  Para arreglar el problema:
-                  <br />
-                  1. Verifica tu conexion internet.
-                  <br />
-                  2. Autorizanos compartir tu ubicacion.
-                  <br />
-                  3. Cambia la ciudad o el pais que has elegido.
-                </p>
-              </div>
-            )}
+            <CatchPhrase />
+            <WeatherDataCurrent />
+            <WeatherDataForecast />
           </>
-        ) : null}
+        ) : (
+          <LocationNotFound />
+        )}
       </div>
-    </div>
+    </MainContext.Provider>
   );
 }
 

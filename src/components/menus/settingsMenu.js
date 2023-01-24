@@ -1,7 +1,11 @@
 import { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCog,
+  faArrowRightRotate,
+  faSave,
+} from "@fortawesome/free-solid-svg-icons";
 
 // import settingsInputs from "../../utils/settingsInputs";
 import favList from "../../utils/favList";
@@ -148,6 +152,10 @@ function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
         className={isSettingsShowed && !isFavShowed ? "active" : "inactive"}
       >
         <p>Configuracion:</p>
+        <div id="pseudo">
+          <p>Como te llamas?</p>
+          <input type="text" />
+        </div>
         <div id="heatIndex">
           <p>Indice de calor</p>
 
@@ -212,18 +220,13 @@ function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
           </div>
 
           <div className="resetAndSaveBtn">
-            <input
-              onClick={resetChanges}
-              id="resetChanges"
-              type="button"
-              value="Reiniciar"
-            />
-            <input
-              onClick={saveChanges}
-              id="saveChanges"
-              type="button"
-              value="Guardar"
-            />
+            <button onClick={resetChanges} id="resetChanges">
+              <FontAwesomeIcon icon={faArrowRightRotate} />
+            </button>
+
+            <button onClick={saveChanges} id="saveChanges">
+              <FontAwesomeIcon icon={faSave} />
+            </button>
           </div>
         </div>
       </div>

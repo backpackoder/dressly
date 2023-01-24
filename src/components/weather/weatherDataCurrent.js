@@ -1,4 +1,6 @@
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
+
+import MainContext from "../../MainContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,8 +10,33 @@ import {
   faWind,
 } from "@fortawesome/free-solid-svg-icons";
 
-import Clock from "./clock";
+import GeneralInfo from "./GeneralInfo";
+
+import Clock from "./Clock";
 import queHaceData from "../../utils/queHaceData";
+
+function WeatherDataCurrent() {
+  const { getWeatherCurrent, getCurrentAirQuality } = useContext(MainContext);
+
+  return (
+    <div id="weatherData">
+      <GeneralInfo />
+      <WeatherLocalDate getWeatherCurrent={getWeatherCurrent} />
+      <div id="weatherMiddleInfos">
+        <div id="weatherPart1">
+          <WeatherFeelsLike getWeatherCurrent={getWeatherCurrent} />
+          <WeatherIcon getWeatherCurrent={getWeatherCurrent} />
+          <WeatherDescription getWeatherCurrent={getWeatherCurrent} />
+        </div>
+        <QueHace getWeatherCurrent={getWeatherCurrent} />
+      </div>
+      <WeatherInfos
+        getWeatherCurrent={getWeatherCurrent}
+        getCurrentAirQuality={getCurrentAirQuality}
+      />
+    </div>
+  );
+}
 
 function WeatherLocalDate({ getWeatherCurrent }) {
   return (
@@ -103,13 +130,20 @@ function QueHace({ getWeatherCurrent }) {
     }
   }, [getWeatherCurrent]);
 
+  const { generalInfo, setGeneralInfo } = useContext(MainContext);
+
   return (
     <div id="queHace">
       {getWeatherCurrent.name ? (
         <p id="queHaceText">{queHace.catchPhrase}</p>
       ) : null}
       <div>
-        <img src={queHace.imgSrc} alt="Frijol o calabacín"></img>
+        <img
+          src={queHace.imgSrc}
+          alt="Frijol o calabacín"
+          onClick={() => setGeneralInfo(!generalInfo)}
+        ></img>
+        <p className="queHaceInfo">☝️ Dale clic x infos ☝️</p>
       </div>
     </div>
   );
@@ -269,26 +303,6 @@ function WeatherInfos({ getWeatherCurrent, getCurrentAirQuality }) {
           ) : null}
         </div>
       </div>
-    </div>
-  );
-}
-
-function WeatherDataCurrent({ getWeatherCurrent, getCurrentAirQuality }) {
-  return (
-    <div id="weatherData">
-      <WeatherLocalDate getWeatherCurrent={getWeatherCurrent} />
-      <div id="weatherMiddleInfos">
-        <div id="weatherPart1">
-          <WeatherFeelsLike getWeatherCurrent={getWeatherCurrent} />
-          <WeatherIcon getWeatherCurrent={getWeatherCurrent} />
-          <WeatherDescription getWeatherCurrent={getWeatherCurrent} />
-        </div>
-        <QueHace getWeatherCurrent={getWeatherCurrent} />
-      </div>
-      <WeatherInfos
-        getWeatherCurrent={getWeatherCurrent}
-        getCurrentAirQuality={getCurrentAirQuality}
-      />
     </div>
   );
 }
