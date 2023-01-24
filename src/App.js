@@ -81,9 +81,9 @@ function App() {
   const forecastFromLocLink = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitud}&lon=${longitud}&lang=sp&units=metric&appid=d493df14c0516863693cb4400253aaff`;
 
   // weatherbit.io links
-  const currentAirQualityLink = `https://api.weatherbit.io/v2.0/current/airquality?city=${citynameInCapitalize}&key=da8804d2bf7242fba42808df119747e5`;
-  const currentAirQualityFromLocLink = `https://api.weatherbit.io/v2.0/current/airquality?lat=${latitud}&lon=${longitud}&key=da8804d2bf7242fba42808df119747e5`;
   // API KEYS : d2a73b171c4f4d3682997db8f0ed6737 /// da8804d2bf7242fba42808df119747e5
+  const currentAirQualityLink = `https://api.weatherbit.io/v2.0/current/airquality?city=${citynameInCapitalize}&key=d2a73b171c4f4d3682997db8f0ed6737`;
+  const currentAirQualityFromLocLink = `https://api.weatherbit.io/v2.0/current/airquality?lat=${latitud}&lon=${longitud}&key=d2a73b171c4f4d3682997db8f0ed6737`;
   // https://www.weatherapi.com links
   // API KEYS : 04196720d32144c9b0124634222512
   // const forecastDaily = "lien";
