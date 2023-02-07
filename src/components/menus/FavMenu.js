@@ -15,10 +15,7 @@ function FavMenu({
   isSettingsShowed,
   showFav,
 }) {
-  // let favListFromLS = localStorage.getItem("favList");
   const favListFromLS = JSON.parse(localStorage.getItem("favList"));
-  // console.log("favListFromLS: " + JSON.stringify(favListFromLS));
-  // console.log("obj: " + JSON.stringify(obj));
 
   function updateLocalStorage() {
     const favListString = JSON.stringify(favList);
@@ -37,7 +34,6 @@ function FavMenu({
     } else {
       setAddedToFavorite(false);
     }
-    // console.log("findCityInFavs: " + JSON.stringify(findCityInFavs, null, 2));
 
     updateLocalStorage();
   }
@@ -54,13 +50,16 @@ function FavMenu({
 
   return (
     <>
-      <div onClick={showFav} id="favMenuBtn">
-        <FontAwesomeIcon icon={faStar} style={{ color: "yellow" }} />
+      <div onClick={showFav} className="favMenuBtn">
+        <FontAwesomeIcon icon={faStar} className="star" />
       </div>
 
       <div
-        id="favMenu"
-        className={isFavShowed && !isSettingsShowed ? "active" : "inactive"}
+        className={
+          isFavShowed && !isSettingsShowed
+            ? "favMenu active"
+            : "favMenu inactive"
+        }
       >
         <p>Lugares favoritos:</p>
         <ul>

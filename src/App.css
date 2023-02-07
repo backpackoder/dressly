@@ -1,4 +1,4 @@
-#mainContainer {
+.mainContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,7 +16,7 @@
 @import "./css files/searchByLocation.css";
 @import "./css files/searchAnotherCity.css";
 
-@import "./css files/weatherDataCurrent.css";
+@import "./css files/current.css";
 @import "./css files/clock.css";
 
-@import "./css files/weatherDataForecast.css";
+@import "./css files/forecast.css";

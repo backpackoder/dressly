@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,8 +9,12 @@ import {
 
 // import settingsInputs from "../../utils/settingsInputs";
 import favList from "../../utils/favList";
+import MainContext from "../../MainContext";
 
 function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
+  const { userName, userNameInCapitalize, setUserName } =
+    useContext(MainContext);
+
   const [temp0, setTemp0] = useState(35);
   const [temp1, setTemp1] = useState(30);
   const [temp2, setTemp2] = useState(25);
@@ -137,26 +141,38 @@ function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
   //   }
   // }
 
+  useEffect(() => {
+    window.localStorage.setItem("userName", userNameInCapitalize);
+  });
+
   return (
     <>
       <div
         onClick={showSettings}
-        id="settingsMenuBtn"
-        className={favList.length > 0 ? "down" : "up"}
+        className={
+          favList.length > 0 ? "settingsMenuBtn down" : "settingsMenuBtn up"
+        }
       >
         <FontAwesomeIcon icon={faCog} style={{ color: "#000" }} />
       </div>
 
       <div
-        id="settingsMenu"
-        className={isSettingsShowed && !isFavShowed ? "active" : "inactive"}
+        className={
+          isSettingsShowed && !isFavShowed
+            ? "settingsMenu active"
+            : "settingsMenu inactive"
+        }
       >
         <p>Configuracion:</p>
-        <div id="pseudo">
+        <div className="pseudo">
           <p>Como te llamas?</p>
-          <input type="text" />
+          <input
+            type="text"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
         </div>
-        <div id="heatIndex">
+        <div className="heatIndex">
           <p>Indice de calor</p>
 
           <div className="levels">
@@ -213,18 +229,19 @@ function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
                       </p>
                     </div>
                   );
+                } else {
+                  return null;
                 }
-                return null;
               })}
             </div>
           </div>
 
           <div className="resetAndSaveBtn">
-            <button onClick={resetChanges} id="resetChanges">
+            <button onClick={resetChanges} className="resetChanges">
               <FontAwesomeIcon icon={faArrowRightRotate} />
             </button>
 
-            <button onClick={saveChanges} id="saveChanges">
+            <button onClick={saveChanges} className="saveChanges">
               <FontAwesomeIcon icon={faSave} />
             </button>
           </div>

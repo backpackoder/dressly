@@ -1,7 +1,7 @@
 function LocationNotFound() {
   return (
     <>
-      <div id="locationNotFound">
+      <div className="locationNotFound">
         <img src="temp0.png" alt="Ninguna ciudad ha sido encontrada" />
         <p>
           Ninguna ciudad ha sido encontrada. <br />

@@ -1,5 +1,5 @@
 /* WeatherDataCurrent */
-#weatherData {
+.weatherData {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -9,11 +9,11 @@
   border-radius: 10px;
   margin: 10px auto;
 }
-#weatherMiddleInfos {
+.weatherMiddleInfos {
   display: flex;
   margin-bottom: 10px;
 }
-#weatherPart1 {
+.weatherPart1 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -27,46 +27,46 @@
 }
 
 /* WeatherFeelsLike */
-#weatherFeelsLike {
+.weatherFeelsLike {
   font-size: 2.5rem;
 }
 
 /* WeatherIcon */
-#icon {
+.icon {
   width: 100px;
 }
 
 /* QueHace */
-#queHace {
+.queHace {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   width: 50%;
 }
-#queHaceText {
+.queHaceText {
   font-size: 1.2rem;
 }
-#queHace > div {
+.queHace > div {
   width: 100%;
 }
-#queHace img {
+.queHace img {
   width: 100%;
   max-width: 100px;
 }
-#queHace .queHaceInfo {
+.queHace .queHaceInfo {
   font-size: 0.6rem;
   font-weight: normal;
 }
 
 /* WeatherInfos */
-#weatherMainInfosItem {
+.weatherMainInfosItem {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
-#weatherMainInfosItem > div {
+.weatherMainInfosItem > div {
   position: relative;
 }
 .help {
@@ -88,16 +88,16 @@
   transform: translate(100%, -100%);
   background-color: rgba(0, 0, 0, 0.5);
 }
-#weatherRise > div:hover::after {
+.weatherRise > div:hover::after {
   content: "amanecer";
 }
-#weatherSet > div:hover::after {
+.weatherSet > div:hover::after {
   content: "puesta de sol";
 }
-#weatherHumidity > div:hover::after {
+.weatherHumidity > div:hover::after {
   content: "humedad";
 }
-#weatherWind > div:hover::after {
+.weatherWind > div:hover::after {
   content: "viento";
 }
 .weatherInfosIcon {
@@ -105,13 +105,13 @@
   max-height: 100%;
 }
 
-#weatherSecondaryInfosItem {
+.weatherSecondaryInfosItem {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 10px;
 }
-#weatherSecondaryInfosItem > div {
+.weatherSecondaryInfosItem > div {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -129,17 +129,17 @@
   justify-content: center;
   margin: 5px 0;
 }
-#getWeatherAqi,
-#getWeatherAirQuality {
+.getWeatherAqi,
+.getWeatherAirQuality {
   border-radius: 5px;
 }
-#getWeatherAqi > span,
-#getWeatherAirQuality > span {
+.getWeatherAqi > span,
+.getWeatherAirQuality > span {
   font-weight: bold;
 }
 
 /* locationNotFoundContainer */
-#locationNotFound img {
+.locationNotFound img {
   max-width: 200px;
   max-height: 200px;
 }

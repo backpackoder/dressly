@@ -7,18 +7,20 @@ function WeatherDataForecast() {
     useContext(MainContext);
 
   return getWeatherForecast.list ? (
-    <div id="weatherDataForecast">
+    <div className="weatherDataForecast">
       <div>
         <h2>Previsiones 24h</h2>
         <p>(cada 3 horas)</p>
-        <div id="weatherDataItemForecastWrapper">
+        <div className="weatherDataItemForecastWrapper">
           {cnt.map((data, index) => {
             return (
-              <WeatherDataItem
-                key={index}
-                getWeatherForecast={getWeatherForecast}
-                cntIndex={data}
-              />
+              index < cntValue * 8 && (
+                <WeatherDataItem
+                  key={index}
+                  getWeatherForecast={getWeatherForecast}
+                  cntIndex={data}
+                />
+              )
             );
           })}
         </div>

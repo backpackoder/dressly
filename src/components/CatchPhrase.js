@@ -42,8 +42,8 @@ function CatchPhrase() {
         </p>
       </div>
       <div id="catchPhraseCoord">
-        <p>longitud: {getWeatherCurrent.coord.lon}</p>
         <p>latitud: {getWeatherCurrent.coord.lat}</p>
+        <p>longitud: {getWeatherCurrent.coord.lon}</p>
       </div>
 
       <div id="favoriteBtnContainer">

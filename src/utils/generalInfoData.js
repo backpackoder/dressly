@@ -1,7 +1,7 @@
 const generalInfoData = {
   day: {
-    before_sunrise: "amanecerá en",
-    after_sunrise: "amaneció hace",
+    before_sunrise: "Amanecerá en",
+    after_sunrise: "Amaneció hace",
     before_sunset: "Atardecerá en",
     after_sunset: "Atardeció hace",
   },
@@ -25,11 +25,11 @@ const generalInfoData = {
     },
     calabacín: {
       today_its: "Hoy hace calabacín",
-      advice: "¡No olvides de usar un bloceador solar!",
+      advice: "Si tienes que salir, ¡Ponte un short y una playera!",
     },
     poco_calabacín: {
       today_its: "Hoy hace un poco calabacín",
-      advice: "Es mejor si usas un bloceador solar.",
+      advice: "Si planeas salir, te aconsejo vestirte solo con una playera.",
     },
     temperado: {
       today_its: "templado",

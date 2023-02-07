@@ -7,21 +7,33 @@ import MainContext from "./MainContext";
 
 // Components
 import Header from "./components/Header";
-import Menus from "./components/menus/Menus";
+import Menus from "./components/menus";
 
 import WeatherHeader from "./components/WeatherHeader";
 import CatchPhrase from "./components/CatchPhrase";
 import SearchAnotherCity from "./components/buttons/SearchAnotherCity";
 
-import WeatherDataCurrent from "./components/weather/WeatherDataCurrent";
-import WeatherDataForecast from "./components/weather/WeatherDataForecast";
+import Current from "./components/weather/Current";
+import Forecast from "./components/weather/Forecast";
 import LocationNotFound from "./components/weather/LocationNotFound";
 
 // Hooks
-import useCitynameInCapitalize from "./hooks/hooks";
+import {
+  useAirQualityLink,
+  useCurrentLink,
+  useForecastLink,
+} from "./hooks/linksAPI";
+import useTextInCapitalize from "./hooks/textInCapitalize";
 
 // Utils
 import favList from "./utils/favList";
+import {
+  getActualUTCHour,
+  getHourOfSunrise,
+  getHourOfSunset,
+  getMinuteOfSunrise,
+  getMinuteOfSunset,
+} from "./constants/constants";
 
 function App() {
   if (navigator.geolocation) {
@@ -34,10 +46,9 @@ function App() {
   }
 
   const [cntValue, setCntValue] = useState(1);
-  const cntLenght = cntValue;
   const cnt = [];
 
-  for (let i = 0; i < cntLenght * 8; i++) {
+  for (let i = 0; i < cntValue * 8; i++) {
     cnt.push(i);
   }
 
@@ -47,49 +58,54 @@ function App() {
     }
   }
 
+  const [willSearch, setWillSearch] = useState(true);
+  const [hasSearched, setHasSearched] = useState(false);
+
+  const [callApi, setCallApi] = useState(false);
+  const [isSearchByLocation, setIsSearchByLocation] = useState(true);
+
   const [longitud, setLongitud] = useState();
   const [latitud, setLatitud] = useState();
 
   const [cityName, setCityName] = useState("");
-
-  const citynameInCapitalize = useCitynameInCapitalize(cityName);
-
-  // const splitCityName = cityName.split(" ");
-  // for (var i = 0; i < splitCityName.length; i++) {
-  //   splitCityName[i] =
-  //     splitCityName[i].charAt(0).toUpperCase() + splitCityName[i].slice(1);
-  // }
-  // const citynameInCapitalize = splitCityName.join(" ");
-
+  const citynameInCapitalize = useTextInCapitalize(cityName);
   const [country, setCountry] = useState("");
+
+  const [loading, setLoading] = useState(true);
 
   const [getWeatherCurrent, setGetWeatherCurrent] = useState({});
   const [getWeatherForecast, setGetWeatherForecast] = useState({});
   const [getCurrentAirQuality, setGetCurrentAirQuality] = useState({});
 
-  const [willSearch, setWillSearch] = useState(true);
-  const [hasSearched, setHasSearched] = useState(false);
-
   const [addedToFavorite, setAddedToFavorite] = useState(false);
 
+  const [userName, setUserName] = useState(
+    localStorage.getItem("userName") || ""
+  );
+  const userNameInCapitalize = useTextInCapitalize(userName);
+
+  const byLocalisation = `lat=${latitud}&lon=${longitud}`;
+  const bySearch = `q=${citynameInCapitalize},${country}`;
+  const bySearchAirQuality = `city=${citynameInCapitalize}&country=${country}`;
+
+  const locOrSearch =
+    longitud && latitud
+      ? isSearchByLocation
+        ? byLocalisation
+        : bySearch
+      : bySearch;
+
+  const locOrSearchAirQuality =
+    longitud && latitud
+      ? isSearchByLocation
+        ? byLocalisation
+        : bySearchAirQuality
+      : bySearchAirQuality;
+
   // API
-  // GetWeatherApi links
-  // API KEYS : d493df14c0516863693cb4400253aaff /// c785a88639c20358827c2b46c36be516
-  const currentLink = `https://api.openweathermap.org/data/2.5/weather?q=${citynameInCapitalize},${country}&lang=sp&units=metric&limit=3&appid=d493df14c0516863693cb4400253aaff`;
-  const forecastLink = `https://api.openweathermap.org/data/2.5/forecast?q=${citynameInCapitalize},${country}&lang=sp&units=metric&limit=3&$cnt=${cntLenght}&appid=d493df14c0516863693cb4400253aaff`;
-  const currentFromLocLink = `https://api.openweathermap.org/data/2.5/weather?lat=${latitud}&lon=${longitud}&lang=sp&units=metric&appid=d493df14c0516863693cb4400253aaff`;
-  const forecastFromLocLink = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitud}&lon=${longitud}&lang=sp&units=metric&appid=d493df14c0516863693cb4400253aaff`;
-
-  // weatherbit.io links
-  // API KEYS : d2a73b171c4f4d3682997db8f0ed6737 /// da8804d2bf7242fba42808df119747e5
-  const currentAirQualityLink = `https://api.weatherbit.io/v2.0/current/airquality?city=${citynameInCapitalize}&key=d2a73b171c4f4d3682997db8f0ed6737`;
-  const currentAirQualityFromLocLink = `https://api.weatherbit.io/v2.0/current/airquality?lat=${latitud}&lon=${longitud}&key=d2a73b171c4f4d3682997db8f0ed6737`;
-  // https://www.weatherapi.com links
-  // API KEYS : 04196720d32144c9b0124634222512
-  // const forecastDaily = "lien";
-
-  const [isSearchByLocation, setIsSearchByLocation] = useState(true);
-  const [callApi, setCallApi] = useState(false);
+  const currentLink = useCurrentLink(locOrSearch);
+  const forecastLink = useForecastLink(locOrSearch);
+  const currentAirQualityLink = useAirQualityLink(locOrSearchAirQuality);
 
   function searchByLocation() {
     setIsSearchByLocation(true);
@@ -145,6 +161,10 @@ function App() {
     cnt,
     cntValue,
     increaseCnt,
+    // User name
+    userName,
+    userNameInCapitalize,
+    setUserName,
     // General info
     generalInfo,
     setGeneralInfo,
@@ -153,43 +173,46 @@ function App() {
   useEffect(() => {
     setWillSearch(false);
     setHasSearched(true);
+    setLoading(true);
     setCntValue(1);
 
-    if (longitud && latitud) {
-      // METHODE YOUNESS
-      // currentLink's fetch
-      fetch(isSearchByLocation ? currentFromLocLink : currentLink)
-        .then((res) => {
-          return res.json();
-        })
-        .then((currentData) => {
-          setGetWeatherCurrent(currentData);
-          return fetch(isSearchByLocation ? forecastFromLocLink : forecastLink);
-        })
-        // forecastLink's fetch
-        .then((res) => {
-          return res.json();
-        })
-        .then((forecastData) => {
-          setGetWeatherForecast(forecastData);
-          return fetch(
-            isSearchByLocation
-              ? currentAirQualityFromLocLink
-              : currentAirQualityLink
-          );
-        })
-        // currentAirQualityLink's fetch
-        .then((res) => {
-          return res.json();
-        })
-        .then((currentAirQualityData) => {
-          setGetCurrentAirQuality(currentAirQualityData);
-        })
-        // Catch if errors
-        .catch((err) => {
-          console.log("erreur dans catch: " + err);
-        });
-    }
+    // current's fetch
+    fetch(currentLink)
+      .then((res) => {
+        return res.json();
+      })
+      .then((currentData) => {
+        setGetWeatherCurrent(currentData);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log("erreur dans catch current: " + err);
+        setLoading(false);
+      });
+
+    // forecast's fetch
+    fetch(forecastLink)
+      .then((res) => {
+        return res.json();
+      })
+      .then((forecastData) => {
+        setGetWeatherForecast(forecastData);
+      })
+      .catch((err) => {
+        console.log("erreur dans catch forecast: " + err);
+      });
+
+    // currentAirQuality's fetch
+    fetch(currentAirQualityLink)
+      .then((res) => {
+        return res.json();
+      })
+      .then((currentAirQualityData) => {
+        setGetCurrentAirQuality(currentAirQualityData);
+      })
+      .catch((err) => {
+        console.log("erreur dans catch currentAirQuality: " + err);
+      });
 
     return () => {
       setCallApi(false);
@@ -214,36 +237,25 @@ function App() {
     if (getWeatherCurrent.name) {
       const root = document.getElementById("root");
 
-      const deltatime = getWeatherCurrent.dt;
-      const timezone = getWeatherCurrent.timezone;
-      const date = new Date((deltatime + timezone) * 1000);
-      const dateHours = date.getUTCHours();
-      const dateMinutes = date.getUTCMinutes();
+      const actualHour = getActualUTCHour(getWeatherCurrent);
+      const hourOfSunrise = getHourOfSunrise(getWeatherCurrent);
+      const minuteOfSunrise = getMinuteOfSunrise(getWeatherCurrent);
+      const hourOfSunset = getHourOfSunset(getWeatherCurrent);
+      const minuteOfSunset = getMinuteOfSunset(getWeatherCurrent);
 
-      const sunrise = getWeatherCurrent.sys.sunrise;
-      const sunset = getWeatherCurrent.sys.sunset;
-      const getHoursRise = new Date((sunrise + timezone) * 1000).getUTCHours();
-      const getHoursSet = new Date((sunset + timezone) * 1000).getUTCHours();
-      const getMinutesRise = new Date(
-        (sunrise + timezone) * 1000
-      ).getUTCMinutes();
-      const getMinutesSet = new Date(
-        (sunset + timezone) * 1000
-      ).getUTCMinutes();
-
-      if (dateHours < getHoursRise) {
+      if (actualHour < hourOfSunrise) {
         root.classList.add("nightTime");
-      } else if (dateHours === getHoursRise) {
-        if (dateMinutes < getMinutesRise) {
+      } else if (actualHour === hourOfSunrise) {
+        if (actualHour < minuteOfSunrise) {
           root.classList.add("nightTime");
         } else {
           root.classList.remove("nightTime");
         }
       } else {
-        if (dateHours > getHoursSet) {
+        if (actualHour > hourOfSunset) {
           root.classList.add("nightTime");
-        } else if (dateHours === getHoursSet) {
-          if (dateMinutes >= getMinutesSet) {
+        } else if (actualHour === hourOfSunset) {
+          if (actualHour >= minuteOfSunset) {
             root.classList.add("nightTime");
           } else {
             root.classList.remove("nightTime");
@@ -261,17 +273,19 @@ function App() {
 
       <Menus />
 
-      <div id="mainContainer">
+      <div className="mainContainer">
         {willSearch ? <WeatherHeader /> : <SearchAnotherCity />}
 
-        {hasSearched && getWeatherCurrent.name ? (
+        {loading && <p>Loading...</p>}
+        {hasSearched && !getWeatherCurrent.name && !loading && (
+          <LocationNotFound />
+        )}
+        {hasSearched && getWeatherCurrent.name && !loading && (
           <>
             <CatchPhrase />
-            <WeatherDataCurrent />
-            <WeatherDataForecast />
+            <Current />
+            <Forecast />
           </>
-        ) : (
-          <LocationNotFound />
         )}
       </div>
     </MainContext.Provider>

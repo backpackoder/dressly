@@ -20,19 +20,19 @@
 }
 
 /* FavMenu */
-#favMenu {
+.favMenu {
   min-height: 125px;
 }
-#favMenu.inactive {
+.favMenu.inactive {
   display: none;
   transition: 0.25s;
 }
-#favMenuBtn {
+.favMenuBtn {
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: -1px;
+  top: 0;
   left: 100%;
   width: 45px;
   height: 45px;
@@ -42,7 +42,7 @@
   border-radius: 5px;
   cursor: pointer;
 }
-#favMenu li {
+.favMenu li {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -59,22 +59,25 @@
   transition: 0.25s ease-out;
   cursor: pointer;
 }
-#favMenu li:hover {
+.favMenu li:hover {
   background-position: left;
 }
-.trashCan {
+.favMenuBtn .star {
+  color: yellow;
+}
+.favMenu .trashCan {
   color: red;
 }
 
 /* SettingsMenu */
-#settingsMenu {
+.settingsMenu {
   min-height: 125px;
 }
-#settingsMenu.inactive {
+.settingsMenu.inactive {
   display: none;
   transition: 0.25s;
 }
-#settingsMenuBtn {
+.settingsMenuBtn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,11 +92,11 @@
   border-radius: 5px;
   cursor: pointer;
 }
-#settingsMenuBtn.up {
+.settingsMenuBtn.up {
   top: -1px;
 }
 
-#heatIndex {
+.heatIndex {
   position: relative;
   font-size: 1rem;
   padding: 5px;

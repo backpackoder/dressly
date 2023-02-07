@@ -10,20 +10,27 @@ import {
   faWind,
 } from "@fortawesome/free-solid-svg-icons";
 
-import GeneralInfo from "./GeneralInfo";
+import GeneralInfo from "./generalInfo";
 
 import Clock from "./Clock";
 import queHaceData from "../../utils/queHaceData";
+import {
+  API_OPENWEATHER_ROOT_IMG,
+  getHourOfSunrise,
+  getHourOfSunset,
+  getMinuteOfSunrise,
+  getMinuteOfSunset,
+} from "../../constants/constants";
 
 function WeatherDataCurrent() {
   const { getWeatherCurrent, getCurrentAirQuality } = useContext(MainContext);
 
   return (
-    <div id="weatherData">
+    <div className="weatherData">
       <GeneralInfo />
       <WeatherLocalDate getWeatherCurrent={getWeatherCurrent} />
-      <div id="weatherMiddleInfos">
-        <div id="weatherPart1">
+      <div className="weatherMiddleInfos">
+        <div className="weatherPart1">
           <WeatherFeelsLike getWeatherCurrent={getWeatherCurrent} />
           <WeatherIcon getWeatherCurrent={getWeatherCurrent} />
           <WeatherDescription getWeatherCurrent={getWeatherCurrent} />
@@ -54,9 +61,9 @@ function WeatherLocalDate({ getWeatherCurrent }) {
 
 function WeatherFeelsLike({ getWeatherCurrent }) {
   return (
-    <div id="weatherFeelsLike" className="weatherInfosItem">
+    <div className="weatherInfosItem weatherFeelsLike">
       {getWeatherCurrent.main ? (
-        <p id="getWeatherFeelsLike">
+        <p className="getWeatherFeelsLike">
           {getWeatherCurrent.main.feels_like.toFixed(1)}°C
         </p>
       ) : null}
@@ -66,15 +73,11 @@ function WeatherFeelsLike({ getWeatherCurrent }) {
 
 function WeatherIcon({ getWeatherCurrent }) {
   return (
-    <div id="weatherIcon" className="weatherInfosItem">
+    <div className="weatherInfosItem weatherIcon">
       {getWeatherCurrent.weather ? (
         <img
-          id="icon"
-          src={
-            "http://openweathermap.org/img/wn/" +
-            getWeatherCurrent.weather[0].icon +
-            ".png"
-          }
+          className="icon"
+          src={`${API_OPENWEATHER_ROOT_IMG}/${getWeatherCurrent.weather[0].icon}.png`}
           alt="weather icon"
         />
       ) : null}
@@ -84,10 +87,12 @@ function WeatherIcon({ getWeatherCurrent }) {
 
 function WeatherDescription({ getWeatherCurrent }) {
   return (
-    <div id="weatherDescription" className="weatherInfosItem">
+    <div className="weatherInfosItem weatherDescription">
       {getWeatherCurrent.weather ? (
         <>
-          <p id="getWeatherDescr">{getWeatherCurrent.weather[0].description}</p>
+          <p className="getWeatherDescr">
+            {getWeatherCurrent.weather[0].description}
+          </p>
         </>
       ) : null}
     </div>
@@ -133,9 +138,9 @@ function QueHace({ getWeatherCurrent }) {
   const { generalInfo, setGeneralInfo } = useContext(MainContext);
 
   return (
-    <div id="queHace">
+    <div className="queHace">
       {getWeatherCurrent.name ? (
-        <p id="queHaceText">{queHace.catchPhrase}</p>
+        <p className="queHaceText">{queHace.catchPhrase}</p>
       ) : null}
       <div>
         <img
@@ -150,14 +155,10 @@ function QueHace({ getWeatherCurrent }) {
 }
 
 function WeatherInfos({ getWeatherCurrent, getCurrentAirQuality }) {
-  const sunrise = getWeatherCurrent.sys.sunrise;
-  const sunset = getWeatherCurrent.sys.sunset;
-  const timezone = getWeatherCurrent.timezone;
-
-  const getHoursRise = new Date((sunrise + timezone) * 1000).getUTCHours();
-  const getHoursSet = new Date((sunset + timezone) * 1000).getUTCHours();
-  const getMinutesRise = new Date((sunrise + timezone) * 1000).getUTCMinutes();
-  const getMinutesSet = new Date((sunset + timezone) * 1000).getUTCMinutes();
+  const getHoursRise = getHourOfSunrise(getWeatherCurrent);
+  const getHoursSet = getHourOfSunset(getWeatherCurrent);
+  const getMinutesRise = getMinuteOfSunrise(getWeatherCurrent);
+  const getMinutesSet = getMinuteOfSunset(getWeatherCurrent);
 
   let currentAirQualityResult = "";
   let currentAirQualityColorResult = {
@@ -234,58 +235,60 @@ function WeatherInfos({ getWeatherCurrent, getCurrentAirQuality }) {
   }
 
   return (
-    <div id="weatherInfos">
-      <div id="weatherMainInfosItem" className="weatherInfosItem">
-        <div id="weatherRise">
+    <div className="weatherInfos">
+      <div className="weatherInfosItem weatherMainInfosItem">
+        <div className="weatherRise">
           <div className="help">
             <FontAwesomeIcon icon={faSun} className="weatherInfosIcon" />
           </div>
           {getWeatherCurrent.sys ? (
-            <p id="getWeatherRise">
+            <p className="getWeatherRise">
               {getHoursRise < 10 ? "0" + getHoursRise : getHoursRise}:
               {getMinutesRise < 10 ? "0" + getMinutesRise : getMinutesRise}
             </p>
           ) : null}
         </div>
 
-        <div id="weatherSet">
+        <div className="weatherSet">
           <div className="help">
             <FontAwesomeIcon icon={faMoon} className="weatherInfosIcon" />
           </div>
           {getWeatherCurrent.sys ? (
-            <p id="getWeatherSet">
+            <p className="getWeatherSet">
               {getHoursSet < 10 ? "0" + getHoursSet : getHoursSet}:
               {getMinutesSet < 10 ? "0" + getMinutesSet : getMinutesSet}
             </p>
           ) : null}
         </div>
 
-        <div id="weatherHumidity">
+        <div className="weatherHumidity">
           <div className="help">
             <FontAwesomeIcon icon={faDroplet} className="weatherInfosIcon" />
           </div>
           {getWeatherCurrent.main ? (
-            <p id="getWeatherHumidity">{getWeatherCurrent.main.humidity}%</p>
+            <p className="getWeatherHumidity">
+              {getWeatherCurrent.main.humidity}%
+            </p>
           ) : null}
         </div>
 
-        <div id="weatherWind">
+        <div className="weatherWind">
           <div className="help">
             <FontAwesomeIcon icon={faWind} className="weatherInfosIcon" />
           </div>
           {getWeatherCurrent.wind ? (
-            <p id="getWeatherWind">{getWeatherCurrent.wind.speed}km/h</p>
+            <p className="getWeatherWind">{getWeatherCurrent.wind.speed}km/h</p>
           ) : null}
         </div>
       </div>
 
-      <div id="weatherSecondaryInfosItem">
+      <div className="weatherSecondaryInfosItem">
         <div>
           <div className="weatherTitleInfosItemWrapper">
             <p className="weatherTitleInfosItem">Calidad del aire:</p>
           </div>
           {getCurrentAirQuality.data ? (
-            <div id="getWeatherAqi" style={currentAirQualityColorResult}>
+            <div className="getWeatherAqi" style={currentAirQualityColorResult}>
               <span>{currentAirQualityResult}</span>
               <br />({getCurrentAirQuality.data[0].aqi})
             </div>
@@ -296,7 +299,10 @@ function WeatherInfos({ getWeatherCurrent, getCurrentAirQuality }) {
             <p className="weatherTitleInfosItem">Monóxido de carbono (CO):</p>
           </div>
           {getCurrentAirQuality.data ? (
-            <p id="getWeatherAirQuality" style={currentCarbonColorResult}>
+            <p
+              className="getWeatherAirQuality"
+              style={currentCarbonColorResult}
+            >
               <span>{currentCarbonResult}</span>
               <br />({getCurrentAirQuality.data[0].co.toFixed(2)} µg/m³)
             </p>
