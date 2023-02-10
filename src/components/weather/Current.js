@@ -1,19 +1,12 @@
 import { useContext, useMemo } from "react";
 
-import MainContext from "../../MainContext";
+// Context
+import { AppContext } from "../../AppContext";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSun,
-  faMoon,
-  faDroplet,
-  faWind,
-} from "@fortawesome/free-solid-svg-icons";
-
-import GeneralInfo from "./generalInfo";
-
+// Components
 import Clock from "./Clock";
-import queHaceData from "../../utils/queHaceData";
+
+// Constants
 import {
   API_OPENWEATHER_ROOT_IMG,
   getHourOfSunrise,
@@ -22,8 +15,21 @@ import {
   getMinuteOfSunset,
 } from "../../constants/constants";
 
+// Utils
+import queHaceData from "../../utils/queHaceData";
+import GeneralInfo from "./generalInfo";
+
+// Icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSun,
+  faMoon,
+  faDroplet,
+  faWind,
+} from "@fortawesome/free-solid-svg-icons";
+
 function WeatherDataCurrent() {
-  const { getWeatherCurrent, getCurrentAirQuality } = useContext(MainContext);
+  const { getWeatherCurrent, getCurrentAirQuality } = useContext(AppContext);
 
   return (
     <div className="weatherData">
@@ -100,6 +106,8 @@ function WeatherDescription({ getWeatherCurrent }) {
 }
 
 function QueHace({ getWeatherCurrent }) {
+  const { generalInfo, setGeneralInfo } = useContext(AppContext);
+
   const queHace = useMemo(() => {
     if (getWeatherCurrent.main) {
       if (getWeatherCurrent.main.temp < 10) {
@@ -134,8 +142,6 @@ function QueHace({ getWeatherCurrent }) {
       }
     }
   }, [getWeatherCurrent]);
-
-  const { generalInfo, setGeneralInfo } = useContext(MainContext);
 
   return (
     <div className="queHace">

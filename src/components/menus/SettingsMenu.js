@@ -1,5 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
+// Context
+import { AppContext } from "../../AppContext";
+
+// Utils
+import favList from "../../utils/favList";
+
+// Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCog,
@@ -7,22 +14,25 @@ import {
   faSave,
 } from "@fortawesome/free-solid-svg-icons";
 
-// import settingsInputs from "../../utils/settingsInputs";
-import favList from "../../utils/favList";
-import MainContext from "../../MainContext";
-
 function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
-  const { userName, userNameInCapitalize, setUserName } =
-    useContext(MainContext);
+  const {
+    userName,
+    userNameInCapitalize,
+    setUserName,
+    temp0,
+    setTemp0,
+    temp1,
+    setTemp1,
+    temp2,
+    setTemp2,
+    temp3,
+    setTemp3,
+    temp4,
+    setTemp4,
+    temp5,
+    setTemp5,
+  } = useContext(AppContext);
 
-  const [temp0, setTemp0] = useState(35);
-  const [temp1, setTemp1] = useState(30);
-  const [temp2, setTemp2] = useState(25);
-  const [temp3, setTemp3] = useState(20);
-  const [temp4, setTemp4] = useState(15);
-  const [temp5, setTemp5] = useState(10);
-
-  // const temps = [temp0, temp1, temp2, temp3, temp4, temp5];
   const setTemps = [
     setTemp0,
     setTemp1,

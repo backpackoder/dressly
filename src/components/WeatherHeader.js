@@ -1,17 +1,22 @@
+import { useContext, useState, useEffect } from "react";
+
+// Context
+import { AppContext } from "../AppContext";
+
+// Components
+import SearchByLocation from "./buttons/SearchByLocation";
+import CountrySelector from "./CountrySelector";
+
+// Utils
+import worldCities from "../utils/worldCities.json";
+
+// Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrashCan,
   faMagnifyingGlass,
   faArrowRightRotate,
 } from "@fortawesome/free-solid-svg-icons";
-
-import SearchByLocation from "./buttons/SearchByLocation";
-
-import CountrySelector from "./CountrySelector";
-
-import worldCities from "../utils/worldCities.json";
-import { useContext, useEffect, useState } from "react";
-import MainContext from "../MainContext";
 
 function WeatherHeader() {
   const {
@@ -23,8 +28,7 @@ function WeatherHeader() {
     resetData,
     setCityName,
     searchByName,
-    searchByLocation,
-  } = useContext(MainContext);
+  } = useContext(AppContext);
 
   const [inputBtnValue, setInputBtnValue] = useState(faMagnifyingGlass);
 
@@ -52,7 +56,7 @@ function WeatherHeader() {
     <>
       <div id="weatherHeader">
         <div id="weatherHeaderCity">
-          <SearchByLocation searchByLocation={searchByLocation} />
+          <SearchByLocation />
           <p>Insierta una ciudad:</p>
           <input
             onChange={(e) => {

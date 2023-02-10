@@ -1,8 +1,10 @@
 import { useContext } from "react";
-import MainContext from "../MainContext";
+
+// Context
+import { AppContext } from "../AppContext";
 
 function Header() {
-  const { hasSearched } = useContext(MainContext);
+  const { hasSearched } = useContext(AppContext);
 
   return (
     <>

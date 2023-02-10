@@ -1,13 +1,18 @@
+import { useContext } from "react";
+
+// Context
+import { AppContext } from "../AppContext";
+
+// Utils
+import favList from "../utils/favList";
+
+// Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-import favList from "../utils/favList";
-import { useContext } from "react";
-import MainContext from "../MainContext";
-
 function CatchPhrase() {
   const { getWeatherCurrent, addedToFavorite, setAddedToFavorite } =
-    useContext(MainContext);
+    useContext(AppContext);
 
   function updateLocalStorage() {
     const favListString = JSON.stringify(favList);

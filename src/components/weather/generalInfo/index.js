@@ -1,13 +1,16 @@
 import { useContext } from "react";
 
+// Context
+import { AppContext } from "../../../AppContext";
+
+// Components
+import AmanecerAtardecer from "./AmanecerAtardecer";
+import Temp from "./Temp";
+
+// Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-
-import MainContext from "../../../MainContext";
-
-import AmanecerAtardecer from "./amanecerAtardecer";
-
-import generalInfoData from "../../../utils/generalInfoData";
+import KindOfAir from "./KindOfAir";
 
 function GeneralInfo() {
   const {
@@ -16,7 +19,7 @@ function GeneralInfo() {
     userNameInCapitalize,
     generalInfo,
     setGeneralInfo,
-  } = useContext(MainContext);
+  } = useContext(AppContext);
 
   return (
     <div
@@ -41,14 +44,10 @@ function GeneralInfo() {
           <AmanecerAtardecer />
           <br />
           <br />
-          {generalInfoData["temp"]["poco_frijol"].today_its} (
-          {getWeatherCurrent.main.feels_like.toFixed(1)}C°) y con{" "}
-          <span>{getWeatherCurrent.weather[0].description}.</span>
+          <Temp getWeatherCurrent={getWeatherCurrent} />
           <br />
           <br />
-          {generalInfoData["temp"]["poco_frijol"].advice}{" "}
-          {generalInfoData["humidity"]["aLittleWet"]} y{" "}
-          {generalInfoData["wind"]["aLittle"]}.
+          <KindOfAir getWeatherCurrent={getWeatherCurrent} />
         </p>
         <img
           src="temp3.png"

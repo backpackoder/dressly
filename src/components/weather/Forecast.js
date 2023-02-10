@@ -1,10 +1,17 @@
 import { useContext } from "react";
 
-import MainContext from "../../MainContext";
+// Context
+import { AppContext } from "../../AppContext";
+import {
+  getActualUTCDate,
+  getActualUTCMonth,
+  getActualUTCHour,
+  getActualUTCMinute,
+} from "../../constants/constants";
 
 function WeatherDataForecast() {
   const { getWeatherForecast, cnt, cntValue, increaseCnt } =
-    useContext(MainContext);
+    useContext(AppContext);
 
   return getWeatherForecast.list ? (
     <div className="weatherDataForecast">
@@ -36,13 +43,10 @@ function WeatherDataForecast() {
 }
 
 function WeatherDataItem({ getWeatherForecast, cntIndex }) {
-  const deltatime = getWeatherForecast.list[cntIndex].dt;
-  const timezone = getWeatherForecast.city.timezone;
-
-  const getDateDt = new Date((deltatime + timezone) * 1000).getUTCDate();
-  const getMonthDt = new Date((deltatime + timezone) * 1000).getUTCMonth();
-  const getHoursDt = new Date((deltatime + timezone) * 1000).getUTCHours();
-  const getMinutesDt = new Date((deltatime + timezone) * 1000).getUTCMinutes();
+  const getDateDt = getActualUTCDate(getWeatherForecast, cntIndex);
+  const getMonthDt = getActualUTCMonth(getWeatherForecast, cntIndex);
+  const getHoursDt = getActualUTCHour(getWeatherForecast, cntIndex);
+  const getMinutesDt = getActualUTCMinute(getWeatherForecast, cntIndex);
 
   return (
     <div className="weatherDataItemForecast">

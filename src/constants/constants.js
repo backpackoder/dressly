@@ -10,7 +10,7 @@ export const API_OPENWEATHER_ROOT_IMG = "https://openweathermap.org/img/wn";
 export const API_WEATHERBIT_ROOT =
   "https://api.weatherbit.io/v2.0/current/airquality";
 // API KEYS : d2a73b171c4f4d3682997db8f0ed6737 /// da8804d2bf7242fba42808df119747e5
-export const API_WEATHERBIT_KEY = "da8804d2bf7242fba42808df119747e5";
+export const API_WEATHERBIT_KEY = "d2a73b171c4f4d3682997db8f0ed6737";
 
 // Text
 export const WEATHER = "weather";
@@ -41,32 +41,40 @@ export const MONTHS = [
   "noviembre",
   "diciembre",
 ];
-export function getDeltatime(data) {
-  return data.dt;
+
+// Get local time
+export function getDeltatime(data, isForecast) {
+  return isForecast || isForecast === 0 ? data.list[isForecast].dt : data.dt;
 }
-export function getTimezone(data) {
-  return data.timezone;
+export function getTimezone(data, isForecast) {
+  return isForecast || isForecast === 0 ? data.city.timezone : data.timezone;
 }
-export function getDate(data) {
-  return new Date((getDeltatime(data) + getTimezone(data)) * 1000);
+
+// Get local date
+export function getDate(data, isForecast) {
+  return new Date(
+    (getDeltatime(data, isForecast) + getTimezone(data, isForecast)) * 1000
+  );
 }
-export function getActualUTCDate(data) {
-  return getDate(data).getUTCDate();
+
+// Get local time datas
+export function getActualUTCDate(data, isForecast) {
+  return getDate(data, isForecast).getUTCDate();
 }
-export function getActualUTCYear(data) {
-  return getDate(data).getUTCFullYear();
+export function getActualUTCYear(data, isForecast) {
+  return getDate(data, isForecast).getUTCFullYear();
 }
-export function getActualUTCMonth(data) {
-  return getDate(data).getUTCMonth();
+export function getActualUTCMonth(data, isForecast) {
+  return getDate(data, isForecast).getUTCMonth();
 }
-export function getActualUTCDay(data) {
-  return getDate(data).getUTCDay();
+export function getActualUTCDay(data, isForecast) {
+  return getDate(data, isForecast).getUTCDay();
 }
-export function getActualUTCHour(data) {
-  return getDate(data).getUTCHours();
+export function getActualUTCHour(data, isForecast) {
+  return getDate(data, isForecast).getUTCHours();
 }
-export function getActualUTCMinute(data) {
-  return getDate(data).getUTCMinutes();
+export function getActualUTCMinute(data, isForecast) {
+  return getDate(data, isForecast).getUTCMinutes();
 }
 
 // Sunrise
@@ -91,3 +99,13 @@ export function getHourOfSunset(data) {
 export function getMinuteOfSunset(data) {
   return new Date((getSunset(data) + getTimezone(data)) * 1000).getUTCMinutes();
 }
+
+// Heat index
+export const HEAT_INDEX = {
+  TEMP_0: 35,
+  TEMP_1: 30,
+  TEMP_2: 25,
+  TEMP_3: 20,
+  TEMP_4: 15,
+  TEMP_5: 10,
+};

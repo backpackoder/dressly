@@ -1,4 +1,6 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
+
+// Libraries
 import Select from "react-select";
 import countryList from "react-select-country-list";
 

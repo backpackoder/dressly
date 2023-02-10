@@ -1,7 +1,9 @@
 import { useContext, useMemo } from "react";
 
-import MainContext from "../../../MainContext";
+// Context
+import { AppContext } from "../../../AppContext";
 
+// Constants
 import {
   getActualUTCHour,
   getActualUTCMinute,
@@ -11,10 +13,11 @@ import {
   getMinuteOfSunset,
 } from "../../../constants/constants";
 
+// Utils
 import generalInfoData from "../../../utils/generalInfoData";
 
 function AmanecerAtardecer() {
-  const { getWeatherCurrent } = useContext(MainContext);
+  const { getWeatherCurrent } = useContext(AppContext);
 
   const actualHour = getActualUTCHour(getWeatherCurrent);
   const actualMinute = getActualUTCMinute(getWeatherCurrent);
@@ -24,9 +27,9 @@ function AmanecerAtardecer() {
   const hourOfSunset = getHourOfSunset(getWeatherCurrent);
   const minuteOfSunset = getMinuteOfSunset(getWeatherCurrent);
 
-  const hora = "hora";
-  const y = "y";
-  const minuto = "min";
+  const HORA = "hora";
+  const CON = "con";
+  const MIN = "min";
   const plural = "s";
 
   const [amanecer, atardecer] = useMemo(() => {
@@ -103,58 +106,72 @@ function AmanecerAtardecer() {
   const amanecerCalc = useMemo(() => {
     if (amanecer === generalInfoData["day"]["before_sunrise"]) {
       if (hourOfSunrise === actualHour) {
-        return `${minuteOfSunrise - actualMinute} ${minuto}`;
+        return `${minuteOfSunrise - actualMinute} ${MIN}`;
       } else {
         return `${
           actualHour < hourOfSunrise
             ? actualMinute <= minuteOfSunrise
-              ? `${hourOfSunrise - actualHour} ${hora}${
-                  hourOfSunrise - actualHour === 1 ? "" : plural
-                }`
-              : `${hourOfSunrise - actualHour - 1} ${hora}${
+              ? minuteOfSunrise - actualMinute - 1 === 0
+                ? ""
+                : `${hourOfSunrise - actualHour} ${HORA}${
+                    hourOfSunrise - actualHour === 1 ? "" : plural
+                  }`
+              : hourOfSunrise - actualHour - 1 === 0
+              ? ""
+              : `${hourOfSunrise - actualHour - 1} ${HORA}${
                   hourOfSunrise - actualHour === 1 ? "" : plural
                 }`
             : actualMinute <= minuteOfSunrise
             ? actualMinute - minuteOfSunrise === 0
               ? ""
-              : `${24 - actualHour + hourOfSunrise} ${hora}${
+              : `${24 - actualHour + hourOfSunrise} ${HORA}${
                   24 - actualHour + hourOfSunrise === 1 ? "" : plural
                 }`
-            : `${24 - actualHour + hourOfSunrise - 1} ${hora}${
+            : `${24 - actualHour + hourOfSunrise - 1} ${HORA}${
                 24 - actualHour + hourOfSunrise - 1 === 1 ? "" : plural
               }`
-        }${actualMinute - minuteOfSunrise === 0 ? "" : `${" "}y${" "}`}${
+        }${
+          hourOfSunrise - actualHour - 1 === 0 ||
+          actualMinute - minuteOfSunrise === 0
+            ? ""
+            : `${" "}${CON}${" "}`
+        }${
           actualMinute <= minuteOfSunrise
             ? minuteOfSunrise - actualMinute === 0
               ? ""
-              : `${minuteOfSunrise - actualMinute} ${minuto}`
-            : `${60 + minuteOfSunrise - actualMinute} ${minuto}`
+              : `${minuteOfSunrise - actualMinute} ${MIN}`
+            : `${60 + minuteOfSunrise - actualMinute} ${MIN}`
         }`;
       }
     } else if (amanecer === generalInfoData["day"]["after_sunrise"]) {
       if (actualHour === hourOfSunrise) {
-        return `${actualMinute - minuteOfSunrise} ${minuto}`;
+        return `${actualMinute - minuteOfSunrise} ${MIN}`;
       } else {
         return `${
           actualHour < hourOfSunrise
-            ? `${hourOfSunrise - actualHour} ${hora}${
+            ? `${hourOfSunrise - actualHour} ${HORA}${
                 hourOfSunrise - actualHour === 1 ? "" : plural
               }`
             : actualMinute <= minuteOfSunrise
             ? actualHour - hourOfSunrise - 1 === 0
               ? ""
-              : `${actualHour - hourOfSunrise - 1} ${hora}${
+              : `${actualHour - hourOfSunrise - 1} ${HORA}${
                   actualHour - hourOfSunrise - 1 === 1 ? "" : plural
                 }`
-            : `${actualHour - hourOfSunrise} ${hora}${
+            : `${actualHour - hourOfSunrise} ${HORA}${
                 actualHour - hourOfSunrise === 1 ? "" : plural
               }`
-        }${actualMinute - minuteOfSunrise === 0 ? "" : `${" "}y${" "}`}${
+        }${
+          actualHour - hourOfSunrise - 1 === 0 ||
+          actualMinute - minuteOfSunrise === 0
+            ? ""
+            : `${" "}${CON}${" "}`
+        }${
           actualMinute <= minuteOfSunrise
             ? actualMinute - minuteOfSunrise === 0
               ? ""
-              : `${60 + actualMinute - minuteOfSunrise} ${minuto}`
-            : `${actualMinute - minuteOfSunrise} ${minuto}`
+              : `${60 + actualMinute - minuteOfSunrise} ${MIN}`
+            : `${actualMinute - minuteOfSunrise} ${MIN}`
         }`;
       }
     }
@@ -163,60 +180,72 @@ function AmanecerAtardecer() {
   const atardecerCalc = useMemo(() => {
     if (atardecer === generalInfoData["day"]["before_sunset"]) {
       if (hourOfSunset === actualHour) {
-        return `${minuteOfSunset - actualMinute} ${minuto}`;
+        return `${minuteOfSunset - actualMinute} ${MIN}`;
       } else {
         return `${
           actualMinute <= minuteOfSunset
-            ? actualMinute - minuteOfSunset === 0
+            ? hourOfSunset - actualHour === 0
               ? ""
-              : `${hourOfSunset - actualHour} ${hora}${
+              : `${hourOfSunset - actualHour} ${HORA}${
                   hourOfSunset - actualHour === 1 ? "" : plural
                 }`
-            : `${hourOfSunset - actualHour - 1} ${hora}${
+            : hourOfSunset - actualHour - 1 === 0
+            ? ""
+            : `${hourOfSunset - actualHour - 1} ${HORA}${
                 hourOfSunset - actualHour - 1 === 1 ? "" : plural
               }`
-        }
-            ${actualMinute - minuteOfSunset === 0 ? "" : `${" "}y${" "}`}
-              ${
-                actualMinute <= minuteOfSunset
-                  ? actualMinute - minuteOfSunset === 0
-                    ? ""
-                    : `${minuteOfSunset - actualMinute} ${minuto}`
-                  : `${60 + minuteOfSunset - actualMinute} ${minuto}`
-              }`;
+        }${
+          hourOfSunset - actualHour - 1 === 0 ||
+          actualMinute - minuteOfSunset === 0
+            ? ""
+            : `${" "}${CON}${" "}`
+        }${
+          actualMinute <= minuteOfSunset
+            ? actualMinute - minuteOfSunset === 0
+              ? ""
+              : `${minuteOfSunset - actualMinute} ${MIN}`
+            : `${60 + minuteOfSunset - actualMinute} ${MIN}`
+        }`;
       }
     } else if (atardecer === generalInfoData["day"]["after_sunset"]) {
       if (actualHour === hourOfSunset) {
-        return `${actualMinute - minuteOfSunset} ${minuto}`;
+        return `${actualMinute - minuteOfSunset} ${MIN}`;
       } else {
         return `${
           actualHour <= hourOfSunset
             ? actualMinute - minuteOfSunset === 0
               ? ""
               : actualMinute < minuteOfSunset
-              ? `${24 - hourOfSunset + actualHour - 1} ${hora}${
+              ? `${24 - hourOfSunset + actualHour - 1} ${HORA}${
                   24 - hourOfSunset + actualHour - 1 === 1 ? "" : plural
                 }`
-              : `${24 - hourOfSunset + actualHour} ${hora}${
+              : `${24 - hourOfSunset + actualHour} ${HORA}${
                   24 - hourOfSunset + actualHour === 1 ? "" : plural
                 }`
             : actualMinute - minuteOfSunset === 0
             ? ""
             : actualMinute < minuteOfSunset
-            ? `${actualHour - hourOfSunset - 1} ${hora}${
-                actualHour - hourOfSunset - 1 === 1 ? "" : plural
-              }`
-            : `${actualHour - hourOfSunset} ${hora}${
+            ? actualHour - hourOfSunset - 1 === 0
+              ? ""
+              : `${actualHour - hourOfSunset - 1} ${HORA}${
+                  actualHour - hourOfSunset - 1 === 1 ? "" : plural
+                }`
+            : `${actualHour - hourOfSunset} ${HORA}${
                 actualHour - hourOfSunset === 1 ? "" : plural
               }`
-        }${actualMinute - minuteOfSunset === 0 ? "" : `${" "}y${" "}`}${
+        }${
+          actualHour - hourOfSunset - 1 === 0 ||
+          actualMinute - minuteOfSunset === 0
+            ? ""
+            : `${" "}${CON}${" "}`
+        }${
           actualMinute <= minuteOfSunset
             ? actualMinute - minuteOfSunset === 0
               ? ""
-              : `${60 + actualMinute - minuteOfSunset} ${minuto}`
+              : `${60 + actualMinute - minuteOfSunset} ${MIN}`
             : actualMinute - minuteOfSunset === 0
             ? ""
-            : `${actualMinute - minuteOfSunset} ${minuto}`
+            : `${actualMinute - minuteOfSunset} ${MIN}`
         }`;
       }
     }

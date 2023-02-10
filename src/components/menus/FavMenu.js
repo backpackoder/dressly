@@ -1,20 +1,30 @@
+import { useContext } from "react";
+
+// Context
+import { AppContext } from "../../AppContext";
+
+// Utils
+import favList from "../../utils/favList";
+
+// Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
-import favList from "../../utils/favList";
-
 function FavMenu({
   setNewFav,
-  citynameInCapitalize,
-  setCityName,
-  setCountry,
-  searchByName,
-  setAddedToFavorite,
+  showFav,
   isFavShowed,
   setIsFavShowed,
   isSettingsShowed,
-  showFav,
 }) {
+  const {
+    searchByName,
+    setCityName,
+    citynameInCapitalize,
+    setCountry,
+    setAddedToFavorite,
+  } = useContext(AppContext);
+
   const favListFromLS = JSON.parse(localStorage.getItem("favList"));
 
   function updateLocalStorage() {
