@@ -78,6 +78,17 @@ function AppProvider(props) {
   const userNameInCapitalize = useTextInCapitalize(userName);
 
   // Heat index
+  window.localStorage.setItem(
+    "heat",
+    JSON.stringify([
+      HEAT_INDEX.TEMP_0,
+      HEAT_INDEX.TEMP_1,
+      HEAT_INDEX.TEMP_2,
+      HEAT_INDEX.TEMP_3,
+      HEAT_INDEX.TEMP_4,
+      HEAT_INDEX.TEMP_5,
+    ])
+  );
   const heatListFromLS = JSON.parse(localStorage.getItem("heat"));
 
   const [temp0, setTemp0] = useState(heatListFromLS[0] || HEAT_INDEX.TEMP_0);
