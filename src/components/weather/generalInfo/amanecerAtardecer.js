@@ -119,7 +119,7 @@ function AmanecerAtardecer() {
               : hourOfSunrise - actualHour - 1 === 0
               ? ""
               : `${hourOfSunrise - actualHour - 1} ${HORA}${
-                  hourOfSunrise - actualHour === 1 ? "" : plural
+                  hourOfSunrise - actualHour - 1 === 1 ? "" : plural
                 }`
             : actualMinute <= minuteOfSunrise
             ? actualMinute - minuteOfSunrise === 0

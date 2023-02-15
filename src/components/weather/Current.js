@@ -106,48 +106,57 @@ function WeatherDescription({ getWeatherCurrent }) {
 }
 
 function QueHace({ getWeatherCurrent }) {
-  const { generalInfo, setGeneralInfo } = useContext(AppContext);
+  const {
+    generalInfo,
+    setGeneralInfo,
+    temp0,
+    temp1,
+    temp2,
+    temp3,
+    temp4,
+    temp5,
+  } = useContext(AppContext);
 
   const queHace = useMemo(() => {
     if (getWeatherCurrent.main) {
-      if (getWeatherCurrent.main.temp < 10) {
+      if (getWeatherCurrent.main.temp < temp5) {
         return queHaceData.temp0;
       } else if (
-        getWeatherCurrent.main.temp >= 10 &&
-        getWeatherCurrent.main.temp < 15
+        getWeatherCurrent.main.temp >= temp5 &&
+        getWeatherCurrent.main.temp < temp4
       ) {
         return queHaceData.temp1;
       } else if (
-        getWeatherCurrent.main.temp >= 15 &&
-        getWeatherCurrent.main.temp < 20
+        getWeatherCurrent.main.temp >= temp4 &&
+        getWeatherCurrent.main.temp < temp3
       ) {
         return queHaceData.temp2;
       } else if (
-        getWeatherCurrent.main.temp >= 20 &&
-        getWeatherCurrent.main.temp < 25
+        getWeatherCurrent.main.temp >= temp3 &&
+        getWeatherCurrent.main.temp < temp2
       ) {
         return queHaceData.temp3;
       } else if (
-        getWeatherCurrent.main.temp >= 25 &&
-        getWeatherCurrent.main.temp < 30
+        getWeatherCurrent.main.temp >= temp2 &&
+        getWeatherCurrent.main.temp < temp1
       ) {
         return queHaceData.temp4;
       } else if (
-        getWeatherCurrent.main.temp >= 30 &&
-        getWeatherCurrent.main.temp < 35
+        getWeatherCurrent.main.temp >= temp1 &&
+        getWeatherCurrent.main.temp < temp0
       ) {
         return queHaceData.temp5;
-      } else if (getWeatherCurrent.main.temp >= 35) {
+      } else if (getWeatherCurrent.main.temp >= temp0) {
         return queHaceData.temp6;
       }
     }
-  }, [getWeatherCurrent]);
+  }, [getWeatherCurrent.main, temp0, temp1, temp2, temp3, temp4, temp5]);
 
   return (
     <div className="queHace">
-      {getWeatherCurrent.name ? (
+      {getWeatherCurrent.name && (
         <p className="queHaceText">{queHace.catchPhrase}</p>
-      ) : null}
+      )}
       <div>
         <img
           src={queHace.imgSrc}

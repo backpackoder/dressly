@@ -6,6 +6,9 @@ import { AppContext } from "../../AppContext";
 // Utils
 import favList from "../../utils/favList";
 
+// Constants
+import { favListFromLS } from "../../constants/constants";
+
 // Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -24,8 +27,6 @@ function FavMenu({
     setCountry,
     setAddedToFavorite,
   } = useContext(AppContext);
-
-  const favListFromLS = JSON.parse(localStorage.getItem("favList"));
 
   function updateLocalStorage() {
     const favListString = JSON.stringify(favList);

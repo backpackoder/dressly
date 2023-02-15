@@ -45,21 +45,21 @@ function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
 
   const settingsInputs = [
     {
-      label: "Mucho calabacín",
+      label: "Mucho calor",
       emoji: "🥵",
       name: "temp6",
       deg: temp0,
       prevDeg: null,
     },
     {
-      label: "Calabacín",
+      label: "Tengo calor",
       emoji: "🔥",
       name: "temp5",
       deg: temp1,
       prevDeg: temp0,
     },
     {
-      label: "Poco calabacín",
+      label: "Poco calor",
       emoji: "♨️",
       name: "temp4",
       deg: temp2,
@@ -73,21 +73,21 @@ function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
       prevDeg: temp2,
     },
     {
-      label: "Poco frijol",
+      label: "Poco frío",
       emoji: "🤧",
       name: "temp2",
       deg: temp4,
       prevDeg: temp3,
     },
     {
-      label: "Frijol",
+      label: "Tengo frío",
       emoji: "❄️",
       name: "temp1",
       deg: temp5,
       prevDeg: temp4,
     },
     {
-      label: "Mucho frijol",
+      label: "Mucho frío",
       emoji: "🥶",
       name: "temp0",
       deg: temp5,
@@ -153,7 +153,12 @@ function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
 
   useEffect(() => {
     window.localStorage.setItem("userName", userNameInCapitalize);
-  });
+  }, [userNameInCapitalize]);
+
+  useEffect(() => {
+    const heatList = [temp0, temp1, temp2, temp3, temp4, temp5];
+    window.localStorage.setItem("heat", JSON.stringify(heatList));
+  }, [temp0, temp1, temp2, temp3, temp4, temp5]);
 
   return (
     <>
@@ -199,8 +204,8 @@ function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
                       Más de{" "}
                       <input
                         type="number"
-                        min="-10"
-                        max="40"
+                        min="-20"
+                        max="50"
                         value={data.deg}
                         onChange={(e) => handleCelcius(e, index)}
                       />
@@ -216,8 +221,8 @@ function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
                       Entre{" "}
                       <input
                         type="number"
-                        min="-10"
-                        max="40"
+                        min="-20"
+                        max="50"
                         value={data.deg}
                         onChange={(e) => handleCelcius(e, index)}
                       />{" "}

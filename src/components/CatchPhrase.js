@@ -19,7 +19,7 @@ function CatchPhrase() {
     window.localStorage.setItem("favList", favListString);
   }
 
-  function addToFav() {
+  function handlerFav() {
     if (addedToFavorite) {
       const findCity = favList.find(
         (item) => item.city === getWeatherCurrent.name
@@ -34,6 +34,7 @@ function CatchPhrase() {
         country: getWeatherCurrent.sys.country,
       });
     }
+
     setAddedToFavorite(!addedToFavorite);
     updateLocalStorage();
   }
@@ -55,7 +56,7 @@ function CatchPhrase() {
         <FontAwesomeIcon
           icon={faStar}
           className={addedToFavorite ? "inFavs" : "notInFavs"}
-          onClick={addToFav}
+          onClick={handlerFav}
         />
       </div>
     </div>

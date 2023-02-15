@@ -12,6 +12,9 @@ export const API_WEATHERBIT_ROOT =
 // API KEYS : d2a73b171c4f4d3682997db8f0ed6737 /// da8804d2bf7242fba42808df119747e5
 export const API_WEATHERBIT_KEY = "d2a73b171c4f4d3682997db8f0ed6737";
 
+// Local storage
+export const favListFromLS = JSON.parse(localStorage.getItem("favList"));
+
 // Text
 export const WEATHER = "weather";
 export const FORECAST = "forecast";

@@ -1,6 +1,7 @@
-const favList = [];
+// Constants
+import { favListFromLS } from "../constants/constants";
 
-const favListFromLS = JSON.parse(localStorage.getItem("favList"));
+const favList = [];
 
 if (favListFromLS) {
   favListFromLS.map((data) => {
@@ -9,28 +10,3 @@ if (favListFromLS) {
 }
 
 export default favList;
-
-// {
-//   city: "Lille",
-//   country: "FR",
-// },
-// {
-//   city: "Tijuana",
-//   country: "MX",
-// },
-// {
-//   city: "Toulouse",
-//   country: "FR",
-// },
-// {
-//   city: "Berlin",
-//   country: "DE",
-// },
-// {
-//   city: "Guadalajara",
-//   country: "MX",
-// },
-// {
-//   city: "Bali",
-//   country: "ID",
-// },
