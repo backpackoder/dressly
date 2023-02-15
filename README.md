@@ -1,6 +1,10 @@
 Name : Dressly
+
 URL : https://dressly.netlify.app/
+
 Goal : Help you to choose your outfit of the day depending on the weather and your personnal preferences.
+
+-----
 
 # Getting Started with Create React App
 
