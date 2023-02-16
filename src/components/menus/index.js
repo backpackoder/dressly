@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+
+// Context
+import { AppContext } from "../../AppContext";
 
 // Components
 import FavMenu from "./FavMenu";
 import SettingsMenu from "./SettingsMenu";
 
-// Utils
-import favList from "../../utils/favList";
-
 function Menus() {
-  const [newFav, setNewFav] = useState(favList);
+  const { newFav, setNewFav } = useContext(AppContext);
 
   const [isFavShowed, setIsFavShowed] = useState(false);
   const [isSettingsShowed, setIsSettingsShowed] = useState(false);
@@ -35,6 +35,7 @@ function Menus() {
       />
       {newFav.length > 0 && (
         <FavMenu
+          newFav={newFav}
           setNewFav={setNewFav}
           showFav={showFav}
           isFavShowed={isFavShowed}

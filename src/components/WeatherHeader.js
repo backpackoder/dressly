@@ -48,10 +48,8 @@ function WeatherHeader() {
 
   function fetchFilter(index) {
     const filterIndex = findLocation[index];
-    setCityName(filterIndex.name);
-    setCountry(filterIndex.country);
 
-    searchByName();
+    searchByName(filterIndex.name, filterIndex.country);
   }
 
   return (
@@ -93,7 +91,11 @@ function WeatherHeader() {
             <button onClick={resetData} id="resetBtn">
               <FontAwesomeIcon icon={faTrashCan} />
             </button>
-            <button onClick={searchByName} id="submitBtn" ref={submitButtonRef}>
+            <button
+              onClick={() => searchByName()}
+              id="submitBtn"
+              ref={submitButtonRef}
+            >
               <FontAwesomeIcon icon={inputBtnValue} />
             </button>
           </div>

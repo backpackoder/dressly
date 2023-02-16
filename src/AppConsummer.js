@@ -26,7 +26,7 @@ function AppConsummer() {
       <div className="mainContainer">
         {willSearch ? <WeatherHeader /> : <SearchAnotherCity />}
 
-        {loading && <p>Loading...</p>}
+        {loading && <p>Cargando...</p>}
         {hasSearched && !getWeatherCurrent.name && !loading && (
           <LocationNotFound />
         )}

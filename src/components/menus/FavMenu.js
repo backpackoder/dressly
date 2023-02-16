@@ -6,57 +6,18 @@ import { AppContext } from "../../AppContext";
 // Utils
 import favList from "../../utils/favList";
 
-// Constants
-import { favListFromLS } from "../../constants/constants";
-
 // Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
-function FavMenu({
-  setNewFav,
-  showFav,
-  isFavShowed,
-  setIsFavShowed,
-  isSettingsShowed,
-}) {
-  const {
-    searchByName,
-    setCityName,
-    citynameInCapitalize,
-    setCountry,
-    setAddedToFavorite,
-  } = useContext(AppContext);
-
-  function updateLocalStorage() {
-    const favListString = JSON.stringify(favList);
-    window.localStorage.setItem("favList", favListString);
-  }
-
-  function deleteFav(index) {
-    favList.splice(index, 1);
-    setNewFav([...favList]);
-
-    const findCityInFavs = favList.find(
-      (item) => item.city === citynameInCapitalize
-    );
-    if (findCityInFavs !== undefined) {
-      setAddedToFavorite(true);
-    } else {
-      setAddedToFavorite(false);
-    }
-
-    updateLocalStorage();
-  }
+function FavMenu({ showFav, isFavShowed, setIsFavShowed, isSettingsShowed }) {
+  const { searchByName, newFav, updateFav } = useContext(AppContext);
 
   function fetchFav(index) {
     const favListIndex = favList[index];
-    setCityName(favListIndex.city);
-    setCountry(favListIndex.country);
 
     setIsFavShowed(!isFavShowed);
-
-    searchByName();
+    searchByName(favListIndex.city, favListIndex.country);
   }
 
   return (
@@ -74,11 +35,11 @@ function FavMenu({
       >
         <p>Lugares favoritos:</p>
         <ul>
-          {favListFromLS.map((data, index) => {
+          {newFav.map((data, index) => {
             return (
               <li key={index}>
                 <FontAwesomeIcon
-                  onClick={() => deleteFav(index)}
+                  onClick={() => updateFav(index)}
                   icon={faTrashCan}
                   className="trashCan"
                 />

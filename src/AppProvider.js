@@ -57,6 +57,7 @@ function AppProvider(props) {
   const citynameInCapitalize = useTextInCapitalize(cityName);
   const [citySearched, setCitySearched] = useState("");
   const [country, setCountry] = useState("");
+  const [countrySearched, setCountrySearched] = useState("");
 
   // General infos
   const [generalInfo, setGeneralInfo] = useState(false);
@@ -70,6 +71,7 @@ function AppProvider(props) {
   }
 
   // Favorites
+  const [newFav, setNewFav] = useState(favList);
   const [addedToFavorite, setAddedToFavorite] = useState(false);
 
   // User name
@@ -111,9 +113,10 @@ function AppProvider(props) {
     setCntValue(1);
   }
 
-  function searchByName() {
+  function searchByName(city, country) {
     setIsSearchByLocation(false);
-    setCitySearched(citynameInCapitalize);
+    setCitySearched(city !== undefined ? city : citynameInCapitalize);
+    setCountrySearched(country !== undefined ? country : countrySearched);
     setCallApi(true);
     setWillSearch(false);
     setHasSearched(true);
@@ -142,92 +145,40 @@ function AppProvider(props) {
     }
   }
 
-  // Context values
-  const contextValue = {
-    // HOOKS
-    // Status
-    willSearch,
-    setWillSearch,
-    hasSearched,
-    setHasSearched,
+  function updateFav(index) {
+    const findCityInFavs = favList.find(
+      (item) => item.city === getWeatherCurrent.name
+    );
 
-    // Coords
-    latitud,
-    setLatitud,
-    longitud,
-    setLongitud,
+    const findCityIndexOf = favList.indexOf(findCityInFavs);
 
-    // Search
-    isSearchByLocation,
-    setIsSearchByLocation,
-    callApi,
-    setCallApi,
-    loading,
-    setLoading,
+    if (index === null) {
+      if (findCityIndexOf !== -1) {
+        favList.splice(findCityIndexOf, 1);
+      } else {
+        favList.push({
+          city: getWeatherCurrent?.name,
+          country: getWeatherCurrent?.sys?.country,
+        });
+      }
+      setAddedToFavorite(!addedToFavorite);
+    } else {
+      favList.splice(index, 1);
+      setAddedToFavorite(findCityIndexOf === index ? false : true);
+    }
 
-    // API datas
-    getWeatherCurrent,
-    setGetWeatherCurrent,
-    getWeatherForecast,
-    setGetWeatherForecast,
-    getCurrentAirQuality,
-    setGetCurrentAirQuality,
+    setNewFav([...favList]);
+    updateLocalStorage();
+  }
 
-    // City and country names
-    cityName,
-    setCityName,
-    citynameInCapitalize,
-    citySearched,
-    setCitySearched,
-    country,
-    setCountry,
-
-    // General info
-    generalInfo,
-    setGeneralInfo,
-
-    // Ctn for forecast
-    cnt,
-    cntValue,
-    setCntValue,
-
-    // Favorites
-    addedToFavorite,
-    setAddedToFavorite,
-
-    // User name
-    userName,
-    setUserName,
-    userNameInCapitalize,
-
-    // Heat index
-    temp0,
-    setTemp0,
-    temp1,
-    setTemp1,
-    temp2,
-    setTemp2,
-    temp3,
-    setTemp3,
-    temp4,
-    setTemp4,
-    temp5,
-    setTemp5,
-
-    // UseRef
-    submitButtonRef,
-    handleKeyPress,
-
-    // FUNCTIONS
-    searchByLocation,
-    searchByName,
-    increaseCnt,
-    resetData,
-  };
+  function updateLocalStorage() {
+    const favListString = JSON.stringify(favList);
+    window.localStorage.setItem("favList", favListString);
+  }
 
   const byLocalisation = `lat=${latitud}&lon=${longitud}`;
-  const bySearch = `q=${citySearched},${country}`;
-  const bySearchAirQuality = `city=${citySearched}&country=${country}`;
+  const bySearch = `q=${citySearched},${countrySearched}`;
+  const bySearchAirQuality = `city=${citySearched}&country=${countrySearched}`;
 
   const locOrSearch =
     latitud && longitud
@@ -318,11 +269,10 @@ function AppProvider(props) {
         item.city === getWeatherCurrent.name &&
         item.country === getWeatherCurrent.sys.country
     );
-    if (findCityInFavs !== undefined) {
-      setAddedToFavorite(true);
-    } else {
-      setAddedToFavorite(false);
-    }
+
+    findCityInFavs !== undefined
+      ? setAddedToFavorite(true)
+      : setAddedToFavorite(false);
   }, [getWeatherCurrent]);
 
   useEffect(() => {
@@ -358,6 +308,94 @@ function AppProvider(props) {
       }
     }
   }, [getWeatherCurrent]);
+
+  // Context values
+  const contextValue = {
+    // HOOKS
+    // Status
+    willSearch,
+    setWillSearch,
+    hasSearched,
+    setHasSearched,
+
+    // Coords
+    latitud,
+    setLatitud,
+    longitud,
+    setLongitud,
+
+    // Search
+    isSearchByLocation,
+    setIsSearchByLocation,
+    callApi,
+    setCallApi,
+    loading,
+    setLoading,
+
+    // API datas
+    getWeatherCurrent,
+    setGetWeatherCurrent,
+    getWeatherForecast,
+    setGetWeatherForecast,
+    getCurrentAirQuality,
+    setGetCurrentAirQuality,
+
+    // City and country names
+    cityName,
+    setCityName,
+    citynameInCapitalize,
+    citySearched,
+    setCitySearched,
+    country,
+    setCountry,
+    countrySearched,
+    setCountrySearched,
+
+    // General info
+    generalInfo,
+    setGeneralInfo,
+
+    // Ctn for forecast
+    cnt,
+    cntValue,
+    setCntValue,
+
+    // Favorites
+    newFav,
+    setNewFav,
+    addedToFavorite,
+    setAddedToFavorite,
+
+    // User name
+    userName,
+    setUserName,
+    userNameInCapitalize,
+
+    // Heat index
+    temp0,
+    setTemp0,
+    temp1,
+    setTemp1,
+    temp2,
+    setTemp2,
+    temp3,
+    setTemp3,
+    temp4,
+    setTemp4,
+    temp5,
+    setTemp5,
+
+    // UseRef
+    submitButtonRef,
+    handleKeyPress,
+
+    // FUNCTIONS
+    searchByLocation,
+    searchByName,
+    increaseCnt,
+    resetData,
+    updateFav,
+  };
 
   return <AppContext.Provider {...props} value={contextValue} />;
 }

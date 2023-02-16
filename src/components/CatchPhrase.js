@@ -3,41 +3,13 @@ import { useContext } from "react";
 // Context
 import { AppContext } from "../AppContext";
 
-// Utils
-import favList from "../utils/favList";
-
 // Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 function CatchPhrase() {
-  const { getWeatherCurrent, addedToFavorite, setAddedToFavorite } =
+  const { getWeatherCurrent, addedToFavorite, updateFav } =
     useContext(AppContext);
-
-  function updateLocalStorage() {
-    const favListString = JSON.stringify(favList);
-    window.localStorage.setItem("favList", favListString);
-  }
-
-  function handlerFav() {
-    if (addedToFavorite) {
-      const findCity = favList.find(
-        (item) => item.city === getWeatherCurrent.name
-      );
-      const findCityIndexOf = favList.indexOf(findCity);
-      if (findCityIndexOf !== -1) {
-        favList.splice(findCityIndexOf, 1);
-      }
-    } else {
-      favList.push({
-        city: getWeatherCurrent.name,
-        country: getWeatherCurrent.sys.country,
-      });
-    }
-
-    setAddedToFavorite(!addedToFavorite);
-    updateLocalStorage();
-  }
 
   return (
     <div id="catchPhraseContainer">
@@ -56,7 +28,7 @@ function CatchPhrase() {
         <FontAwesomeIcon
           icon={faStar}
           className={addedToFavorite ? "inFavs" : "notInFavs"}
-          onClick={handlerFav}
+          onClick={() => updateFav(null)}
         />
       </div>
     </div>
