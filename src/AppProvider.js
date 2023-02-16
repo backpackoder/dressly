@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // Hooks
 import {
@@ -100,6 +100,8 @@ function AppProvider(props) {
     heatListFromLS === null ? HEAT_INDEX.TEMP_5 : heatListFromLS[5]
   );
 
+  const submitButtonRef = useRef();
+
   // Functions
   function searchByLocation() {
     setIsSearchByLocation(true);
@@ -134,6 +136,13 @@ function AppProvider(props) {
     setGetCurrentAirQuality({});
   }
 
+  function handleKeyPress(event) {
+    if (event.key === "Enter") {
+      submitButtonRef.current.click();
+    }
+  }
+
+  // Context values
   const contextValue = {
     // HOOKS
     // Status
@@ -204,6 +213,10 @@ function AppProvider(props) {
     setTemp4,
     temp5,
     setTemp5,
+
+    // UseRef
+    submitButtonRef,
+    handleKeyPress,
 
     // FUNCTIONS
     searchByLocation,

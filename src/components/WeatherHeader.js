@@ -28,6 +28,8 @@ function WeatherHeader() {
     resetData,
     setCityName,
     searchByName,
+    submitButtonRef,
+    handleKeyPress,
   } = useContext(AppContext);
 
   const [inputBtnValue, setInputBtnValue] = useState(faMagnifyingGlass);
@@ -54,7 +56,7 @@ function WeatherHeader() {
 
   return (
     <>
-      <div id="weatherHeader">
+      <div id="weatherHeader" onKeyDown={handleKeyPress}>
         <div id="weatherHeaderCity">
           <SearchByLocation />
           <p>Insierta una ciudad:</p>
@@ -70,11 +72,14 @@ function WeatherHeader() {
 
           <div className="locationGuesser">
             {findLocation.map((data, index) => {
-              return citynameInCapitalize && index < 10 ? (
-                <p key={index} onClick={() => fetchFilter(index)}>
-                  {data.name}, {data.country}
-                </p>
-              ) : null;
+              return (
+                citynameInCapitalize &&
+                index < 10 && (
+                  <p key={index} onClick={() => fetchFilter(index)}>
+                    {data.name}, {data.country}
+                  </p>
+                )
+              );
             })}
           </div>
         </div>
@@ -88,7 +93,7 @@ function WeatherHeader() {
             <button onClick={resetData} id="resetBtn">
               <FontAwesomeIcon icon={faTrashCan} />
             </button>
-            <button onClick={searchByName} id="submitBtn">
+            <button onClick={searchByName} id="submitBtn" ref={submitButtonRef}>
               <FontAwesomeIcon icon={inputBtnValue} />
             </button>
           </div>
