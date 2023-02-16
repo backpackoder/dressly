@@ -78,29 +78,26 @@ function AppProvider(props) {
   const userNameInCapitalize = useTextInCapitalize(userName);
 
   // Heat index
-  window.localStorage.setItem(
-    "heat",
-    JSON.stringify([
-      HEAT_INDEX.TEMP_0,
-      HEAT_INDEX.TEMP_1,
-      HEAT_INDEX.TEMP_2,
-      HEAT_INDEX.TEMP_3,
-      HEAT_INDEX.TEMP_4,
-      HEAT_INDEX.TEMP_5,
-    ])
-  );
   const heatListFromLS = JSON.parse(localStorage.getItem("heat"));
 
-  const [temp0, setTemp0] = useState(heatListFromLS[0] || HEAT_INDEX.TEMP_0);
-  const [temp1, setTemp1] = useState(heatListFromLS[1] || HEAT_INDEX.TEMP_1);
-  const [temp2, setTemp2] = useState(heatListFromLS[2] || HEAT_INDEX.TEMP_2);
-  const [temp3, setTemp3] = useState(heatListFromLS[3] || HEAT_INDEX.TEMP_3);
-  const [temp4, setTemp4] = useState(heatListFromLS[4] || HEAT_INDEX.TEMP_4);
-  const [temp5, setTemp5] = useState(heatListFromLS[5] || HEAT_INDEX.TEMP_5);
-  // list for LS
-  const heatList = [temp0, temp1, temp2, temp3, temp4, temp5];
-  window.localStorage.setItem("heat", JSON.stringify(heatList));
-  console.log("get heat", heatListFromLS);
+  const [temp0, setTemp0] = useState(
+    heatListFromLS === null ? HEAT_INDEX.TEMP_0 : heatListFromLS[0]
+  );
+  const [temp1, setTemp1] = useState(
+    heatListFromLS === null ? HEAT_INDEX.TEMP_1 : heatListFromLS[1]
+  );
+  const [temp2, setTemp2] = useState(
+    heatListFromLS === null ? HEAT_INDEX.TEMP_2 : heatListFromLS[2]
+  );
+  const [temp3, setTemp3] = useState(
+    heatListFromLS === null ? HEAT_INDEX.TEMP_3 : heatListFromLS[3]
+  );
+  const [temp4, setTemp4] = useState(
+    heatListFromLS === null ? HEAT_INDEX.TEMP_4 : heatListFromLS[4]
+  );
+  const [temp5, setTemp5] = useState(
+    heatListFromLS === null ? HEAT_INDEX.TEMP_5 : heatListFromLS[5]
+  );
 
   // Functions
   function searchByLocation() {
@@ -203,8 +200,6 @@ function AppProvider(props) {
     setTemp4,
     temp5,
     setTemp5,
-    // list for LS
-    heatList,
 
     // FUNCTIONS
     searchByLocation,

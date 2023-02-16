@@ -3,6 +3,9 @@ import { useContext, useEffect } from "react";
 // Context
 import { AppContext } from "../../AppContext";
 
+// Constants
+import { HEAT_INDEX } from "../../constants/constants";
+
 // Utils
 import favList from "../../utils/favList";
 
@@ -101,12 +104,12 @@ function SettingsMenu({ isSettingsShowed, isFavShowed, showSettings }) {
   }
 
   function resetChanges() {
-    setTemp0(35);
-    setTemp1(30);
-    setTemp2(25);
-    setTemp3(20);
-    setTemp4(15);
-    setTemp5(10);
+    setTemp0(HEAT_INDEX.TEMP_0);
+    setTemp1(HEAT_INDEX.TEMP_1);
+    setTemp2(HEAT_INDEX.TEMP_2);
+    setTemp3(HEAT_INDEX.TEMP_3);
+    setTemp4(HEAT_INDEX.TEMP_4);
+    setTemp5(HEAT_INDEX.TEMP_5);
   }
 
   function saveChanges() {}
