@@ -162,7 +162,7 @@ function QueHace({ getWeatherCurrent }) {
           src={queHace.imgSrc}
           alt="Frijol o calabacín"
           onClick={() => setGeneralInfo(!generalInfo)}
-        ></img>
+        />
         <p className="queHaceInfo">☝️ Dale clic x infos ☝️</p>
       </div>
     </div>

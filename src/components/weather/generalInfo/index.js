@@ -40,7 +40,6 @@ function GeneralInfo() {
           </span>
           :
           <br />
-          <br />
           <Daylight />
           <br />
           <br />
