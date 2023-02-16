@@ -288,8 +288,7 @@ function AppProvider(props) {
     return () => {
       setCallApi(false);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [callApi, latitud, longitud]);
+  }, [callApi, currentAirQualityLink, currentLink, forecastLink]);
 
   useEffect(() => {
     const findCityInFavs = favList.find(
@@ -336,9 +335,9 @@ function AppProvider(props) {
         }
       }
     }
-  });
+  }, [getWeatherCurrent]);
 
-  return <AppContext.Provider value={contextValue} {...props} />;
+  return <AppContext.Provider {...props} value={contextValue} />;
 }
 
 export default AppProvider;
