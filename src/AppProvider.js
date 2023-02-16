@@ -227,17 +227,17 @@ function AppProvider(props) {
       : bySearchAirQuality;
 
   // API calls
-  const currentLink = useCurrentLink(locOrSearch, latitud, longitud, cityName);
+  const currentLink = useCurrentLink(latitud, longitud, locOrSearch, cityName);
   const forecastLink = useForecastLink(
-    locOrSearch,
     latitud,
     longitud,
+    locOrSearch,
     cityName
   );
   const currentAirQualityLink = useAirQualityLink(
-    locOrSearchAirQuality,
     latitud,
     longitud,
+    locOrSearchAirQuality,
     cityName
   );
 
@@ -288,7 +288,18 @@ function AppProvider(props) {
     return () => {
       setCallApi(false);
     };
-  }, [callApi, currentAirQualityLink, currentLink, forecastLink]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [callApi]);
+
+  console.log("-------------");
+  console.log("cityName", cityName);
+  console.log("citynameInCapitalize", citynameInCapitalize);
+  console.log("country", country);
+  console.log("callApi", callApi);
+  console.log("willSearch", willSearch);
+  console.log("hasSearched", hasSearched);
+  console.log("getWeatherCurrent", getWeatherCurrent);
+  console.log("getWeatherForecast", getWeatherForecast);
 
   useEffect(() => {
     const findCityInFavs = favList.find(

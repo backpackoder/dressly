@@ -7,22 +7,22 @@ import {
   WEATHER,
 } from "../constants/constants";
 
-export function useCurrentLink(locOrSearch, latitud, longitud, cityName) {
+export function useCurrentLink(latitud, longitud, locOrSearch, cityName) {
   return (latitud && longitud) || cityName
     ? `${API_OPENWEATHER_ROOT}/${WEATHER}?${locOrSearch}&lang=sp&units=metric&limit=3&appid=${API_OPENWEATHER_KEY}`
     : null;
 }
 
-export function useForecastLink(locOrSearch, latitud, longitud, cityName) {
+export function useForecastLink(latitud, longitud, locOrSearch, cityName) {
   return (latitud && longitud) || cityName
     ? `${API_OPENWEATHER_ROOT}/${FORECAST}?${locOrSearch}&lang=sp&units=metric&limit=3&cnt=40&appid=${API_OPENWEATHER_KEY}`
     : null;
 }
 
 export function useAirQualityLink(
-  locOrSearchAirQuality,
   latitud,
   longitud,
+  locOrSearchAirQuality,
   cityName
 ) {
   return (latitud && longitud) || cityName
