@@ -93,26 +93,26 @@ const generalInfoData = {
   },
 
   temp: {
-    mucho_calabacín: {
+    mucho_calor: {
       today_its: {
         before: "Hoy hace",
-        key: "mucho calabacín",
+        key: "mucho calor",
         after: "",
       },
       advice: "¡Ponte en calzon!",
     },
-    calabacín: {
+    calor: {
       today_its: {
         before: "Hoy hace",
-        key: "calabacín",
+        key: "calor",
         after: "",
       },
       advice: "Si tienes que salir, ¡Ponte un short y una playera!",
     },
-    poco_calabacín: {
+    poco_calor: {
       today_its: {
         before: "Hoy hace",
-        key: "un poco calabacín",
+        key: "un poco calor",
         after: "",
       },
       advice: "Si planeas salir, te aconsejo vestirte solo con una playera.",
@@ -125,26 +125,26 @@ const generalInfoData = {
       },
       advice: "¡Es el tiempo perfecto para salir!",
     },
-    poco_frijol: {
+    poco_frío: {
       today_its: {
         before: "Hoy hace",
-        key: "un poco frijol",
+        key: "un poco frío",
         after: "",
       },
       advice: "Si planeas salir, te aconsejo usar una chamarra.",
     },
-    frijol: {
+    frío: {
       today_its: {
         before: "Hoy hace",
-        key: "frijol",
+        key: "frío",
         after: "",
       },
       advice: "Si tienes que salir, ¡no olvides tu sudadera!",
     },
-    mucho_frijol: {
+    mucho_frío: {
       today_its: {
         before: "Hoy hace",
-        key: "mucho frijol",
+        key: "mucho frío",
         after: "",
       },
       advice: "¡No salgas o te vas a convertir en hielo!",

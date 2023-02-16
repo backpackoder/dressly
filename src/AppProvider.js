@@ -113,10 +113,10 @@ function AppProvider(props) {
     setCntValue(1);
   }
 
-  function searchByName(city, country) {
+  function searchByName(cityFav, countryFav) {
     setIsSearchByLocation(false);
-    setCitySearched(city !== undefined ? city : citynameInCapitalize);
-    setCountrySearched(country !== undefined ? country : countrySearched);
+    setCitySearched(cityFav !== undefined ? cityFav : citynameInCapitalize);
+    setCountrySearched(countryFav !== undefined ? countryFav : country);
     setCallApi(true);
     setWillSearch(false);
     setHasSearched(true);

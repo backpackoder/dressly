@@ -13,20 +13,20 @@ function Temperature({ getWeatherCurrent }) {
     switch (true) {
       case actualTemp > HEAT_INDEX.TEMP_0:
         return [
-          generalInfoData["temp"]["mucho_calabacín"].today_its,
-          generalInfoData["temp"]["mucho_calabacín"].advice,
+          generalInfoData["temp"]["mucho_calor"].today_its,
+          generalInfoData["temp"]["mucho_calor"].advice,
         ];
 
       case actualTemp <= HEAT_INDEX.TEMP_0 && actualTemp >= HEAT_INDEX.TEMP_1:
         return [
-          generalInfoData["temp"]["calabacín"].today_its,
-          generalInfoData["temp"]["calabacín"].advice,
+          generalInfoData["temp"]["calor"].today_its,
+          generalInfoData["temp"]["calor"].advice,
         ];
 
       case actualTemp < HEAT_INDEX.TEMP_1 && actualTemp >= HEAT_INDEX.TEMP_2:
         return [
-          generalInfoData["temp"]["poco_calabacín"].today_its,
-          generalInfoData["temp"]["poco_calabacín"].advice,
+          generalInfoData["temp"]["poco_calor"].today_its,
+          generalInfoData["temp"]["poco_calor"].advice,
         ];
 
       case actualTemp < HEAT_INDEX.TEMP_2 && actualTemp >= HEAT_INDEX.TEMP_3:
@@ -37,20 +37,20 @@ function Temperature({ getWeatherCurrent }) {
 
       case actualTemp < HEAT_INDEX.TEMP_3 && actualTemp >= HEAT_INDEX.TEMP_4:
         return [
-          generalInfoData["temp"]["poco_frijol"].today_its,
-          generalInfoData["temp"]["poco_frijol"].advice,
+          generalInfoData["temp"]["poco_frío"].today_its,
+          generalInfoData["temp"]["poco_frío"].advice,
         ];
 
       case actualTemp < HEAT_INDEX.TEMP_4 && actualTemp >= HEAT_INDEX.TEMP_5:
         return [
-          generalInfoData["temp"]["frijol"].today_its,
-          generalInfoData["temp"]["frijol"].advice,
+          generalInfoData["temp"]["frío"].today_its,
+          generalInfoData["temp"]["frío"].advice,
         ];
 
       case actualTemp < HEAT_INDEX.TEMP_5:
         return [
-          generalInfoData["temp"]["mucho_frijol"].today_its,
-          generalInfoData["temp"]["mucho_frijol"].advice,
+          generalInfoData["temp"]["mucho_frío"].today_its,
+          generalInfoData["temp"]["mucho_frío"].advice,
         ];
 
       default:
