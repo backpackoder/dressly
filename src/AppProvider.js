@@ -55,6 +55,7 @@ function AppProvider(props) {
   // City and country names
   const [cityName, setCityName] = useState("");
   const citynameInCapitalize = useTextInCapitalize(cityName);
+  const [citySearched, setCitySearched] = useState("");
   const [country, setCountry] = useState("");
 
   // General infos
@@ -110,6 +111,7 @@ function AppProvider(props) {
 
   function searchByName() {
     setIsSearchByLocation(false);
+    setCitySearched(citynameInCapitalize);
     setCallApi(true);
     setWillSearch(false);
     setHasSearched(true);
@@ -166,6 +168,8 @@ function AppProvider(props) {
     cityName,
     setCityName,
     citynameInCapitalize,
+    citySearched,
+    setCitySearched,
     country,
     setCountry,
 
@@ -209,8 +213,8 @@ function AppProvider(props) {
   };
 
   const byLocalisation = `lat=${latitud}&lon=${longitud}`;
-  const bySearch = `q=${citynameInCapitalize},${country}`;
-  const bySearchAirQuality = `city=${citynameInCapitalize}&country=${country}`;
+  const bySearch = `q=${citySearched},${country}`;
+  const bySearchAirQuality = `city=${citySearched}&country=${country}`;
 
   const locOrSearch =
     latitud && longitud
@@ -227,18 +231,23 @@ function AppProvider(props) {
       : bySearchAirQuality;
 
   // API calls
-  const currentLink = useCurrentLink(latitud, longitud, locOrSearch, cityName);
+  const currentLink = useCurrentLink(
+    latitud,
+    longitud,
+    locOrSearch,
+    citySearched
+  );
   const forecastLink = useForecastLink(
     latitud,
     longitud,
     locOrSearch,
-    cityName
+    citySearched
   );
   const currentAirQualityLink = useAirQualityLink(
     latitud,
     longitud,
     locOrSearchAirQuality,
-    cityName
+    citySearched
   );
 
   useEffect(() => {
@@ -288,18 +297,7 @@ function AppProvider(props) {
     return () => {
       setCallApi(false);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [callApi]);
-
-  console.log("-------------");
-  console.log("cityName", cityName);
-  console.log("citynameInCapitalize", citynameInCapitalize);
-  console.log("country", country);
-  console.log("callApi", callApi);
-  console.log("willSearch", willSearch);
-  console.log("hasSearched", hasSearched);
-  console.log("getWeatherCurrent", getWeatherCurrent);
-  console.log("getWeatherForecast", getWeatherForecast);
+  }, [callApi, currentAirQualityLink, currentLink, forecastLink]);
 
   useEffect(() => {
     const findCityInFavs = favList.find(

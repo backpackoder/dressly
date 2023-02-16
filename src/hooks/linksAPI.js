@@ -7,14 +7,14 @@ import {
   WEATHER,
 } from "../constants/constants";
 
-export function useCurrentLink(latitud, longitud, locOrSearch, cityName) {
-  return (latitud && longitud) || cityName
+export function useCurrentLink(latitud, longitud, locOrSearch, citySearched) {
+  return (latitud && longitud) || citySearched
     ? `${API_OPENWEATHER_ROOT}/${WEATHER}?${locOrSearch}&lang=sp&units=metric&limit=3&appid=${API_OPENWEATHER_KEY}`
     : null;
 }
 
-export function useForecastLink(latitud, longitud, locOrSearch, cityName) {
-  return (latitud && longitud) || cityName
+export function useForecastLink(latitud, longitud, locOrSearch, citySearched) {
+  return (latitud && longitud) || citySearched
     ? `${API_OPENWEATHER_ROOT}/${FORECAST}?${locOrSearch}&lang=sp&units=metric&limit=3&cnt=40&appid=${API_OPENWEATHER_KEY}`
     : null;
 }
@@ -23,9 +23,9 @@ export function useAirQualityLink(
   latitud,
   longitud,
   locOrSearchAirQuality,
-  cityName
+  citySearched
 ) {
-  return (latitud && longitud) || cityName
+  return (latitud && longitud) || citySearched
     ? `${API_WEATHERBIT_ROOT}?${locOrSearchAirQuality}&key=${API_WEATHERBIT_KEY}`
     : null;
 }
