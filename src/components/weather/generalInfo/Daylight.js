@@ -16,7 +16,7 @@ import {
 // Utils
 import generalInfoData from "../../../utils/generalInfoData";
 
-function AmanecerAtardecer() {
+function Daylight() {
   const { getWeatherCurrent } = useContext(AppContext);
 
   const actualHour = getActualUTCHour(getWeatherCurrent);
@@ -270,4 +270,4 @@ function AmanecerAtardecer() {
   );
 }
 
-export default AmanecerAtardecer;
+export default Daylight;

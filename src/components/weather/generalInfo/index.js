@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AppContext } from "../../../AppContext";
 
 // Components
-import AmanecerAtardecer from "./AmanecerAtardecer";
+import Daylight from "./Daylight";
 import Temp from "./Temp";
 
 // Icons
@@ -41,7 +41,7 @@ function GeneralInfo() {
           :
           <br />
           <br />
-          <AmanecerAtardecer />
+          <Daylight />
           <br />
           <br />
           <Temp getWeatherCurrent={getWeatherCurrent} />
